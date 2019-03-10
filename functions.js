@@ -1,7 +1,9 @@
 //To do :
-// add the perimeter functions of the following shapes : circle, triangle, parallelogramm, trapeze, diamond
+// add the perimeter functions of the following shapes : parallelogramm, trapeze, diamond
 // add the area functions of the following shapes : square, rectangle, circle, triangle, parallelogramm, trapeze, diamond, cube, rectangle cuboid, sphere
 // add the volume functions of the following shapes : cube, rectangle cuboid, sphere, square based pyramid, rectangle based pyramid
+
+require(`./constants`);
 
 function add(a, b) {
     return a + b;
@@ -28,4 +30,9 @@ function rectanglePerimeter(length, width) {
 }
 
 function circlePerimeter(radius) {
-    return radius * 2 * 
+    return radius * 2 * pi;
+}
+
+function trianglePerimetet(base, side1, side2) {
+    return base + side1 + side2;
+}
