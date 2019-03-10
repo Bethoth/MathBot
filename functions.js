@@ -1,3 +1,8 @@
+//To do :
+// add the perimeter functions of the following shapes : circle, triangle, parallelogramm, trapeze, diamond
+// add the area functions of the following shapes : square, rectangle, circle, triangle, parallelogramm, trapeze, diamond, cube, rectangle cuboid, sphere
+// add the volume functions of the following shapes : cube, rectangle cuboid, sphere, square based pyramid, rectangle based pyramid
+
 function add(a, b) {
     return a + b;
 }
