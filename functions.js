@@ -26,3 +26,6 @@ function squarePerimeter(side) {
 function rectanglePerimeter(length, width) {
     return (length * 2) + (width * 2);
 }
+
+function circlePerimeter(radius) {
+    return radius * 2 * 
