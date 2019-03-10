@@ -59,3 +59,27 @@ function rectangleArea(length, width) {
 function diskArea(radius) {
     return (radius * radius) * pi;
 }
+
+function parallelogrammArea(base, height) {
+    return base * height;
+}
+
+function triangleArea(base, height) {
+    return (base * height) / 2;
+}
+
+function trapezeArea(base1, base2, height) {
+    return ((base1 + base2) * height) / 2;
+}
+
+function diamondArea(diagonal1, diagonal2) {
+    return diagonal1 * diagonal2 / 2;
+}
+
+function sphereArea(radius) {
+    return (radius * radius) * (pi * 4);
+}
+
+function coneArea(radius, height) {
+    return MATH.sqrt((radius * radius) + (height * height)) * pi * radius;
+}
