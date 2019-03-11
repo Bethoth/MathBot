@@ -81,5 +81,22 @@ function sphereArea(radius) {
 }
 
 function coneArea(radius, height) {
-    return MATH.sqrt((radius * radius) + (height * height)) * pi * radius;
+    return Math.sqrt((radius * radius) + (height * height)) * pi * radius;
 }
+
+function cubeArea(arete) {
+    return (arete * arete) * 6;
+}
+
+function rectangleCuboidArea(length, width, height) {
+    return (2 * length * width) + (2 * length * height) + (2 * width * height);
+}
+
+function cylinderArea(radius, height) {
+    return 2 * pi * radius * height;
+}
+
+function squareBasedPyramidArea(baseSide, height) {
+    return (baseSide * 4) * Math.sqrt((height * height) + (baseSide / 2) * (baseSide / 2)) / 2;
+}
+
