@@ -1,7 +1,3 @@
-//To do :
-// add the area functions of the following shapes : square, rectangle, circle, triangle, parallelogramm, trapeze, diamond, cube, rectangle cuboid, sphere
-// add the volume functions of the following shapes : cube, rectangle cuboid, sphere, square based pyramid, rectangle based pyramid
-
 require(`./constants`);
 
 function add(a, b) {
@@ -100,3 +96,42 @@ function squareBasedPyramidArea(baseSide, height) {
     return (baseSide * 4) * Math.sqrt((height * height) + (baseSide / 2) * (baseSide / 2)) / 2;
 }
 
+function cubeVolume(arete) {
+    return Math.pow(arete, 3);
+}
+
+function rectangleCuboidVolume(length, width, height) {
+    return length * width * height;
+}
+
+function cylinderVolume(radius, height) {
+    pi * (radius * radius) * height;
+}
+
+function coneVolume(radius, height) {
+    return (pi * (radius * radius) * height) / 3;
+}
+
+function squareBasedPyramidVolume(side, height) {
+    return ((side * side) * height) / 3;
+}
+
+function rectangleBasedPyramidVolume(length, width, height) {
+    return ((length * width) * height) / 3;
+}
+
+function sphereVolume(radius) {
+    return (4.0 / 3.0) * pi * Math.pow(radius, 3);
+}
+
+function pythagoreOtherSide(hypotenuse, knownSide) {
+    Math.sqrt((hypotenuse * hypotenuse) - (knownSide * knownSide));
+}
+
+function thalesWithUnknownNumerator(knownFractionNumerator, knownFractionDenominator, knownDenominator) {
+    return (knownFractionNumerator * knownDenominator) / knownFractionDenominator;
+}
+
+function thalesWithUnknownDenominator(knownFractionNumerator, knownFractionDenominator, knownNumerator) {
+    return (knownFractionDenominator * knownNumerator) / knownFractionNumerator;
+}
