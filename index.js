@@ -33,7 +33,7 @@ function circlePerimeter(radius) {
     return radius * 2 * pi;
 }
 
-function trianglePerimetet(base, side1, side2) {
+function trianglePerimeter(base, side1, side2) {
     return base + side1 + side2;
 }
 
@@ -236,9 +236,230 @@ client.on(`message`, message => {
             }
         }
         
-        if(command === "p") {
+        else if(command === "p") {
             if(args[0] === "square") {
                 let side = parseFloat(args[1]);
+                
+                if(!Number.isNaN(side)) {
+                    message.channel.send(result("P", side + " * 4", squarePerimeter(side)));
+                }
+                
+                else if(args.length !== 2) {
+                    message.channel.send(numberOfParamError(1));
+                }
+                
+                else message.channel.send(typeOfParamError("nombres"));
+            }
+            
+            else if(args[0] === "rectangle") {
+                let length = parseFloat(args[1]);
+                let width = parseFloat(args[2]);
+                
+                if(!Number.isNaN(length) && !Number.isNaN(width)) {
+                    message.channel.send(result("P", "(" + length + " * 2) + (" + width + " * 2)", rectanglePerimeter(length, width)));
+                }
+                
+                else if(args.length !== 3) {
+                    message.channel.send(numberOfParamError(2));
+                }
+                
+                else message.channel.send(typeOfParamError("nombres"));
+            }
+            
+            else if(args[0] === "circle") {
+                let radius = parseFloat(args[1]);
+                
+                if(!Number.isNaN(radius)) {
+                    message.channel.send(result("P", "pi * 2 * " + radius, circlePerimeter(radius)));
+                }
+                
+                else if(args.length !== 2) {
+                    message.channel.send(numberOfParamError(1));
+                }
+                
+                else message.channel.send(typeOfParamError("nombres"));
+            }
+            
+            else if(args[0] === "triangle") {
+                let base = parseFloat(args[1]);
+                let side1 = parseFloat(args[2]);
+                let side2 = parseFloat(args[3]);
+                
+                if(!Number.isNaN(base) && !Number.isNaN(side1) && !Number.isNaN(side2)) {
+                    message.channel.send(result("P", base + " + " + side1 + " + " + side2, trianglePerimeter(base, side1, side2)));
+                }
+                
+                else if(args.length !== 4) {
+                    message.channel.send(numberOfParamError(3));
+                }
+                
+                else message.channel.send(typeOfParamError("nombres"));
+            }
+            
+            else if(args[0] === "parallelogramm") {
+                let side1 = parseFloat(args[1]);
+                let side2 = parseFloat(args[2]);
+                
+                if(!Number.isNaN(side1) && !Number.isNaN(side2)) {
+                    message.channel.send(result("P", "(" + side1 + " * 2) + (" + side2 + " * 2)", parallelogrammPerimeter(side1, side2)));
+                }
+                
+                else if(args.length !== 3) {
+                    message.channel.send(numberOfParamError(2));
+                }
+                
+                else message.channel.send(typeOfParamError("nombres"));
+            }
+            
+            else if(args[0] === "trapeze") {
+                let base1 = parseFloat(args[1]);
+                let base2 = parseFloat(args[2]);
+                let side1 = parseFloat(args[3]);
+                let side2 = parseFloat(args[4]);
+                
+                if(!Number.isNaN(base1) && !Number.isNaN(base2) && !Number.isNaN(side1) && !Number.isNaN(side2)) {
+                    message.channel.send(result("P", base1 + " + " + base2 + " + " + side1 + " + " + side2, trapezePerimeter(base1, base2, side1, side2)));
+                }
+                
+                else if(args.length !== 5) {
+                    message.channel.send(numberOfParamError(4));
+                }
+                
+                else message.channel.send(typeOfParamError("nombres"));
+            }
+            
+            else if(args[0] === "diamond") {
+                let side = parseFloat(args[1]);
+                
+                if(!Number.isNaN(side)) {
+                    message.channel.send(result("P", side + " * 4", diamondPerimeter(side)));
+                }
+                
+                else if(args.length !== 2) {
+                    message.channel.send(numberOfParamError(1));
+                }
+                
+                else message.channel.send(typeOfParamError("nombres"));
+            }
+        }
+        
+        else if(command === "a") {
+            if(args[0] === "square") {
+                let side = parseFloat(args[1]);
+                
+                if(!Number.isNaN(side)) {
+                    message.channel.send(result("A", side + " * " + side, squareArea(side)));
+                }
+                
+                else if(args.length !== 2) {
+                    message.channel.send(numberOfParamError(1));
+                }
+                
+                else message.channel.send(typeOfParamError("nombres"));
+            }
+            
+            else if(args[0] === "disk") {
+                let radius = parseFloat(args[1]);
+                
+                if(!Number.isNaN(radius)) {
+                    message.channel.send(result("A", "(" + radius + " * " + radius + ") * pi", diskArea(radius)));
+                }
+                
+                else if(args.length !== 2) {
+                    message.channel.send(numberOfParamError(1));
+                }
+                
+                else message.channel.send(typeOfParamError("nombres"));
+            }
+            
+            else if(args[0] === "parallelogramm") {
+                let base = parseFloat(args[1]);
+                let height = parseFloat(args[2]);
+                
+                if(!Number.isNaN(base) && !Number.isNaN(height)) {
+                    message.channel.send(result("A", base + " * " + height, parallelogrammArea(base, height)));
+                }
+                
+                else if(args.length !== 3) {
+                    message.channel.send(numberOfParamError(2));
+                }
+                
+                else message.channel.send(typeOfParamError("nombres"));
+            }
+            
+            else if(args[0] === "triangle") {
+                let base = parseFloat(args[1]);
+                let height = parseFloat(args[2]);
+                
+                if(!Number.isNaN(base) && !Number.isNaN(height)) {
+                    message.channel.send(result("A", "(" + base + " * " + height + ") / 2", triangleArea(base, height)));
+                }
+                
+                else if(args.length !== 3) {
+                    message.channel.send(numberOfParamError(2));
+                }
+                
+                else message.channel.send(typeOfParamError("nombres"));
+            }
+            
+            else if(args[0] === "trapeze") {
+                let base1 = parseFloat(args[1]);
+                let base2 = parseFloat(args[2]);
+                let height = parseFloat(args[3]);
+                
+                if(!Number.isNaN(base1) && !Number.isNaN(base2) && !Number.isNaN(height)) {
+                    message.channel.send(result("A", "((" + base1 + " + " + base2 + ") * " + height + ") / 2", trapezeArea(base1, base2, height)));
+                }
+                
+                else if(args.length !== 4) {
+                    message.channel.send(numberOfParamError(3));
+                }
+                
+                else message.channel.send(typeOfParamError("nombres"));
+            }
+            
+            else if(args[0] === "diamond") {
+                let diagonal1 = parseFloat(args[1]);
+                let diagonal2 = parseFloat(args[2]);
+                
+                if(!Number.isNaN(diagonal1) && !Number.isNaN(diagonal2)) {
+                    message.channel.send(result("A", diagonal1 + " * " + diagonal2 + " / 2", diamondArea(diagonal1, diagonal2)));
+                }
+                
+                else if(args.length !== 3) {
+                    message.channel.send(numberOfParamError(2));
+                }
+                
+                else message.channel.send(typeOfParamError("nombres"));
+            }
+            
+            else if(args[0] === "sphere") {
+                let radius = parseFloat(args[1]);
+                
+                if(!Number.isNaN(radius)) {
+                    message.channel.send(result("A", "(" + radius + " * " + radius + ") * (pi * 4)", sphereArea(radius)));
+                }
+                
+                else if(args.length !== 2) {
+                    message.channel.send(numberOfParamError(1));
+                }
+                
+                else message.channel.send(typeOfParamError("nombres"));
+            }
+            
+            else if(args[0] === "cone") {
+                let radius = parseFloat(args[1]);
+                let height = parseFloat(args[2]);
+                
+                if(!Number.isNaN(radius) && !Number.isNaN(height)) {
+                    message.channel.send(result("A", "racine carrée de ((" + radius + " * " + radius + ") + (" + height + " * " + height + ")) * pi * " + radius, coneArea(radius, height)));
+                }
+                
+                else if(args.length !== 3) {
+                    message.channel.send(numberOfParamError(2));
+                }
+                
+                else message.channel.send(typeOfParamError("nombres"));
             }
         }
     }
