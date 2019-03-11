@@ -149,6 +149,14 @@ function numberOfParamError(expectedNumber) {
     return embed;
 }
 
+function typeOfParamError(expectedType) {
+    let embed = new discord.RichEmbed();
+    embed.setTitle(`Erreur: types des paramètres`);
+    embed.setColor("FF0000");
+    embed.setDescription(`:x: veuillez n'utiliser que des ` + expectedType);
+    return embed;
+}
+
 function result(calculation, explanation, result) {
     let embed = new discord.RichEmbed();
     embed.setTitle("Résultat:");
@@ -175,7 +183,56 @@ client.on(`message`, message => {
                     message.channel.send(result("Addition", a + " + " + b, add(a, b)));
                 }
 
-                //here we'll be the case of invalid type of argument and error with the number of arguments
+                else if(args.length !== 3) {
+                    message.channel.send(numberOfParamError(2));
+                }
+
+                else message.channel.send(typeOfParamError("nombres"));
+            }
+
+            else if(args[1] === '-') {
+                let a = parseFloat(args[0]);
+                let b = parseFloat(args[2]);
+
+                if(!Number.isNaN(a) && !Number.isNaN(b)) {
+                    message.channel.send(result("Soustraction", a + " - " + b, subtract(a, b)));
+                }
+
+                else if(args.length !== 3) {
+                    message.channel.send(numberOfParamError(2));
+                }
+
+                else message.channel.send(typeOfParamError("nombres"));
+            }
+
+            else if(args[1] === '*') {
+                let a = parseFloat(args[0]);
+                let b = parseFloat(args[2]);
+
+                if(!Number.isNaN(a) && !Number.isNaN(b)) {
+                    message.channel.send(result("Multiplication", a + " * " + b, multiply(a, b)));
+                }
+
+                else if(args.length !== 3) {
+                    message.channel.send(numberOfParamError(2));
+                }
+
+                else message.channel.send(typeOfParamError("nombres"));
+            }
+
+            else if(args[1] === '/') {
+                let a = parseFloat(args[0]);
+                let b = parseFloat(args[2]);
+
+                if(!Number.isNaN(a) && !Number.isNaN(b)) {
+                    message.channel.send(result("Division", a + " / " + b, divide(a, b)));
+                }
+
+                else if(args.length !== 3) {
+                    message.channel.send(numberOfParamError(2));
+                }
+
+                else message.channel.send(typeOfParamError("nombres"));
             }
         }
     }
