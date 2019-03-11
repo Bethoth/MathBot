@@ -175,7 +175,7 @@ client.on(`message`, message => {
                     message.channel.send(result("Addition", a + " + " + b, add(a, b)));
                 }
 
-
+                //here we'll be the case of invalid type of argument and error with the number of arguments
             }
         }
     }
