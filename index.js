@@ -235,6 +235,12 @@ client.on(`message`, message => {
                 else message.channel.send(typeOfParamError("nombres"));
             }
         }
+        
+        if(command === "p") {
+            if(args[0] === "square") {
+                let side = parseFloat(args[1]);
+            }
+        }
     }
 });
 
