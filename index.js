@@ -475,6 +475,52 @@ client.on(`message`, message => {
                 
                 else message.channel.send(typeOfParamError("nombres"));
             }
+            
+            else if(args[0] === "r_c") {
+                let length = parseFloat(args[1]);
+                let width = parseFloat(args[2]);
+                let height = parseFloat(args[3]);
+                
+                if(!Number.isNaN(length) && !Number.isNaN(width) && !Number.isNaN(height) && args.length === 3) {
+                    message.channel.send(result("A", "(" + length + " * " + width + ") + (" + width + " * " + height + ") + (" + length + " * " + width + ")", rectangleCuboidArea(length, width, height)));
+                }
+                
+                else if(args.length !== 4) {
+                    message.channel.send(numberOfParamError(3));
+                }
+                
+                else message.channel.send(typeOfParamError("nombres"));
+            }
+            
+            else if(args[0] === "cylinder") {
+                let radius = parseFloat(args[1]);
+                let height = parseFloat(args[2]);
+                
+                if(!Number.isNaN(radius) && !Number.isNaN(height) && args.length === 2) {
+                    message.channel.send(result("A", "pi * (" + radius + " * " + radius + ") * " + height, cylinderArea(radius, height)));
+                }
+                
+                else if(args.length !== 3) {
+                    message.channel.send(numberOfParamError(2));
+                }
+                
+                else message.channel.send(typeOfParamError("nombres"));
+            }
+            
+            else if(args[0] === "pyramid_s") {
+                let baseSide = parseFloat(args[1]);
+                let height = parseFloat(args[2]);
+                
+                if(!Number.isNaN(baseSide) && !Number.isNaN(height) && args.length === 2) {
+                    message.channel.send(result("A", "(" + baseSide + " * 4 * racine carrée de ((" + height + " * " + height + ") + (" + baseSide + " / 2) * (" + baseSide + " / 2)) / 2", squareBasedPyramidArea(baseSide, height)));
+                }
+                
+                else if(args.length !== 3) {
+                    message.channel.send(numberOfParamError(2));
+                }
+                
+                else message.channel.send(typeOfParamError("nombres"));
+            }
         }
     }
 });
