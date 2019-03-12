@@ -1,3 +1,7 @@
 This file is going to contain a todo list ordered as the importance of the task.
 
 1. Finish to write the command in index.js
+
+2. Avoid divisions by 0
+
+3. Avoid use of number protruding the limit of display imposed by Javascript
