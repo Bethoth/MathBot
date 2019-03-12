@@ -358,6 +358,21 @@ client.on(`message`, message => {
                 else message.channel.send(typeOfParamError("nombres"));
             }
             
+            else if(args[0] === "rectangle") {
+                let length = parseFloat(args[1]);
+                let width = parseFloat(args[2]);
+
+                if(!Number.isNaN(length) && !Number.isNaN(width) && args.length === 3) {
+                    message.channel.send(result("A", length + " * " + width, rectangleArea(length, width)));
+                }
+
+                else if(args.length !== 3) {
+                    message.channel.send(numberOfParamError(2));
+                }
+
+                else message.channel.send(typeOfParamError("nombres"));
+            }
+            
             else if(args[0] === "disk") {
                 let radius = parseFloat(args[1]);
                 
