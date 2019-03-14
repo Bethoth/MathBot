@@ -4,7 +4,7 @@ Author : ThePizzaDu62
 
 Creation date : 9 / 03 / 2019
 
-Contributors : ThePizzaDu62, Luqor
+Contributors : ThePizzaDu62, Luquor
 
 A bot to do math in Discord. Developped in discord.js
 
