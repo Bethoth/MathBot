@@ -2,8 +2,9 @@ const discord = require(`discord.js`);
 const client = new discord.Client();
 
 const prefix = '$';
-const pi = 3.14159265359;
+const pi = Math.PI;
 const tau = pi * 2;
+
 
 function add(a, b) {
     return a + b;
