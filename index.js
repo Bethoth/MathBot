@@ -157,11 +157,19 @@ function typeOfParamError(expectedType) {
     return embed;
 }
 
-function result(calculation, explanation, result) {
+function typeOfUnitError() {
+    let embed = new discord.RichEmbed();
+    embed.setTitle("Erreur: unité");
+    embed.setColor("FF0000");
+    embed.setDescription(`:x: les unités doivent être des lettres`);
+    return embed;
+}
+
+function result(calculation, explanation, result, unit = "") {
     let embed = new discord.RichEmbed();
     embed.setTitle("Résultat:");
     embed.setColor("10DA5A");
-    embed.setDescription(calculation + " = " + explanation + " = " + result);
+    embed.setDescription(calculation + " = " + explanation + " = " + result + unit);
     return embed;
 }
 
@@ -239,13 +247,22 @@ client.on(`message`, message => {
         else if(command === "p") {
             if(args[0] === "square") {
                 let side = parseFloat(args[1]);
+                let unit = args[2];
 
                 if(!Number.isNaN(side) && args.length === 2) {
                     message.channel.send(result("P", side + " * 4", squarePerimeter(side)));
                 }
 
-                else if(args.length !== 2) {
+                else if(!Number.isNaN(side) && args.length === 3 && /\d/.test(unit) === false) {
+                    message.channel.send(result("P", side + " * 4", squarePerimeter(side), unit));
+                }
+
+                else if(args.length !== 3) {
                     message.channel.send(numberOfParamError(1));
+                }
+
+                else if(/\d/.test(unit) === true) {
+                    message.channel.send(typeOfUnitError());
                 }
 
                 else message.channel.send(typeOfParamError("nombres"));
@@ -254,13 +271,22 @@ client.on(`message`, message => {
             else if(args[0] === "rectangle") {
                 let length = parseFloat(args[1]);
                 let width = parseFloat(args[2]);
+                let unit = args[3];
 
                 if(!Number.isNaN(length) && !Number.isNaN(width) && args.length === 3) {
                     message.channel.send(result("P", "(" + length + " * 2) + (" + width + " * 2)", rectanglePerimeter(length, width)));
                 }
 
+                else if(!Number.isNaN(side) && args.length === 4 && /\d/.test(unit) === false) {
+                    message.channel.send(result("P", "(" + length + " * 2) + (" + width + " * 2)", rectanglePerimeter(length, width), unit));
+                }
+
                 else if(args.length !== 3) {
                     message.channel.send(numberOfParamError(2));
+                }
+
+                else if(/\d/.test(unit) === true) {
+                    message.channel.send(typeOfUnitError());
                 }
 
                 else message.channel.send(typeOfParamError("nombres"));
@@ -353,6 +379,21 @@ client.on(`message`, message => {
 
                 else if(args.length !== 2) {
                     message.channel.send(numberOfParamError(1));
+                }
+
+                else message.channel.send(typeOfParamError("nombres"));
+            }
+
+            else if(args[0] === "rectangle") {
+                let length = parseFloat(args[1]);
+                let width = parseFloat(args[2]);
+
+                if(!Number.isNaN(length) && !Number.isNaN(width) && args.length === 3) {
+                    message.channel.send(result("A", length + " * " + width, rectangleArea(length, width)));
+                }
+
+                else if(args.length !== 3) {
+                    message.channel.send(numberOfParamError(2));
                 }
 
                 else message.channel.send(typeOfParamError("nombres"));
@@ -513,6 +554,83 @@ client.on(`message`, message => {
 
                 if(!Number.isNaN(baseSide) && !Number.isNaN(height) && args.length === 2) {
                     message.channel.send(result("A", "(" + baseSide + " * 4 * racine carrée de ((" + height + " * " + height + ") + (" + baseSide + " / 2) * (" + baseSide + " / 2)) / 2", squareBasedPyramidArea(baseSide, height)));
+                }
+
+                else if(args.length !== 3) {
+                    message.channel.send(numberOfParamError(2));
+                }
+
+                else message.channel.send(typeOfParamError("nombres"));
+            }
+        }
+
+        else if(command === "v") {
+            if(args[0] === "cube") {
+                let arete = parseFloat(args[1]);
+
+                if(!Number.isNaN(arete) && args.length === 2) {
+                    message.channel.send(result("V", arete + " * " + arete + " * " + arete, cubeVolume(arete)));
+                }
+
+                else if(args.length !== 2) {
+                    message.channel.send(numberOfParamError(1));
+                }
+
+                else message.channel.send(typeOfParamError("nombres"));
+            }
+
+            else if(args[0] === "r_c") {
+                let length = parseFloat(args[1]);
+                let width = parseFloat(args[2]);
+                let height = parseFloat(args[3]);
+
+                if(!Number.isNaN(length) && !Number.isNaN(width) && !Number.isNaN(height) && args.length === 4) {
+                    message.channel.send(result("V", length + " * " + width + " * " + height, rectangleCuboidVolume(length, width, height)));
+                }
+
+                else if(args.length !== 4) {
+                    message.channel.send(numberOfParamError(3));
+                }
+
+                else message.channel.send(typeOfParamError("nombres"));
+            }
+
+            else if(args[0] === "cylinder") {
+                let radius = parseFloat(args[1]);
+                let height = parseFloat(args[2]);
+
+                if(!Number.isNaN(radius) && !Number.isNaN(height) &&  args.length === 3) {
+                    message.channel.send(result("V", "pi * (" + radius + " * " + radius + ") * " + height, cylinderVolume(radius, height)));
+                }
+
+                else if(args.length !== 3) {
+                    message.channel.send(numberOfParamError(2));
+                }
+
+                else message.channel.send(typeOfParamError("nombres"));
+            }
+
+            else if(args[0] === "cone") {
+                let radius = parseFloat(args[1]);
+                let height = parseFloat(args[2]);
+
+                if(!Number.isNaN(radius) && !Number.isNaN(height) &&  args.length === 3) {
+                    message.channel.send(result("V", "pi * (" + radius + " * " + radius + ") * " + height + " / 3", coneVolume(radius, height)));
+                }
+
+                else if(args.length !== 3) {
+                    message.channel.send(numberOfParamError(2));
+                }
+
+                else message.channel.send(typeOfParamError("nombres"));
+            }
+
+            else if(args[0] === "pyramid_s") {
+                let side = parseFloat(args[1]);
+                let height = parseFloat(args[2]);
+
+                if(!Number.isNaN(side) && !Number.isNaN(height) &&  args.length === 3) {
+                    message.channel.send(result("V", "(" + radius + " * " + radius + ") * " + height + " / 3", squareBasedPyramidVolume(side, height)));
                 }
 
                 else if(args.length !== 3) {
