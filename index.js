@@ -1,5 +1,6 @@
 const discord = require(`discord.js`);
 const client = new discord.Client();
+require("./package.json");
 
 const prefix = '$';
 const pi = Math.PI;
@@ -7,131 +8,131 @@ const tau = pi * 2;
 
 
 function add(a, b) {
-    return a + b;
+    return Math.round((a + b) * 1000) / 1000;
 }
 
 function subtract(a, b) {
-    return a - b;
+    return Math.round((a - b) * 1000) / 1000;
 }
 
 function multiply(a, b) {
-    return a * b;
+    return Math.round((a * b) * 1000) / 1000;
 }
 
 function divide(a, b) {
-    return a / b;
+    return Math.round((a / b) * 1000) / 1000;
 }
 
 function squarePerimeter(side) {
-    return side * 4;
+    return Math.round((side * 4) * 1000) / 1000;
 }
 
 function rectanglePerimeter(length, width) {
-    return (length * 2) + (width * 2);
+    return Math.round(((length * 2) + (width * 2)) * 1000) / 1000;
 }
 
 function circlePerimeter(radius) {
-    return radius * 2 * pi;
+    return Math.round((radius * 2 * pi) * 1000) / 1000;
 }
 
 function trianglePerimeter(base, side1, side2) {
-    return base + side1 + side2;
+    return Math.round((base + side1 + side2) * 1000) / 1000;
 }
 
 function parallelogramPerimeter(side1, side2) {
-    return (side1 * 2) + (side2 * 2);
+    return Math.round(((side1 * 2) + (side2 * 2)) * 1000) / 1000;
 }
 
 function trapezePerimeter(base1, base2, side1, side2) {
-    return base1 + base2 + side1 + side2;
+    return Math.round((base1 + base2 + side1 + side2) * 1000) / 1000;
 }
 
 function diamondPerimeter(side) {
-    return side * 4;
+    return Math.round((side * 4) * 1000) / 1000;
 }
 
 function squareArea(side) {
-    return side * side;
+    return Math.round((side * side) * 1000) / 1000;
 }
 
 function rectangleArea(length, width) {
-    return length * width;
+    return Math.round((length * width) * 1000) / 1000;
 }
 
 function diskArea(radius) {
-    return (radius * radius) * pi;
+    return Math.round(((radius * radius) * pi) * 1000) / 1000;
 }
 
 function parallelogramArea(base, height) {
-    return base * height;
+    return Math.round((base * height) * 1000) / 1000;
 }
 
 function triangleArea(base, height) {
-    return (base * height) / 2;
+    return Math.round(((base * height) / 2) * 1000) / 1000;
 }
 
 function trapezeArea(base1, base2, height) {
-    return ((base1 + base2) * height) / 2;
+    return Math.round((((base1 + base2) * height) / 2) * 1000) / 1000;
 }
 
 function diamondArea(diagonal1, diagonal2) {
-    return diagonal1 * diagonal2 / 2;
+    return Math.round((diagonal1 * diagonal2 / 2) * 1000) / 1000;
 }
 
 function sphereArea(radius) {
-    return (radius * radius) * (pi * 4);
+    return Math.round(((radius * radius) * (pi * 4)) * 1000) / 1000;
 }
 
 function coneArea(radius, height) {
-    return Math.sqrt((radius * radius) + (height * height)) * pi * radius;
+    return Math.round((Math.sqrt((radius * radius) + (height * height)) * pi * radius) * 1000) / 1000;
 }
 
 function cubeArea(arete) {
-    return (arete * arete) * 6;
+    return Math.round(((arete * arete) * 6) * 1000) / 1000;
 }
 
 function rectangleCuboidArea(length, width, height) {
-    return (2 * length * width) + (2 * length * height) + (2 * width * height);
+    return Math.round(((2 * length * width) + (2 * length * height) + (2 * width * height)) * 1000) / 1000;
 }
 
 function cylinderArea(radius, height) {
-    return 2 * pi * radius * height;
+    return Math.round((2 * pi * radius * height) * 1000) / 1000;
 }
 
 function squareBasedPyramidArea(baseSide, height) {
-    return (baseSide * 4) * Math.sqrt((height * height) + (baseSide / 2) * (baseSide / 2)) / 2;
+    return Math.round(((baseSide * 4) * Math.sqrt((height * height) + (baseSide / 2) * (baseSide / 2)) / 2) * 1000) / 1000;
 }
 
 function cubeVolume(arete) {
-    return Math.pow(arete, 3);
+    return Math.round((Math.pow(arete, 3)) * 1000) / 1000;
 }
 
 function rectangleCuboidVolume(length, width, height) {
-    return length * width * height;
+    return Math.round((length * width * height) * 1000) / 1000;
 }
 
 function cylinderVolume(radius, height) {
-    return pi * (radius * radius) * height;
+    return Math.round((pi * (radius * radius) * height) * 1000) / 1000;
 }
 
 function coneVolume(radius, height) {
-    return (pi * (radius * radius) * height) / 3;
+    return Math.round(((pi * (radius * radius) * height) / 3) * 1000) / 1000;
 }
 
 function squareBasedPyramidVolume(side, height) {
-    return ((side * side) * height) / 3;
+    return Math.round((((side * side) * height) / 3) * 1000) / 1000;
 }
 
 function rectangleBasedPyramidVolume(length, width, height) {
-    return ((length * width) * height) / 3;
+    return Math.round((((length * width) * height) / 3) * 1000) / 1000;
 }
 
 function sphereVolume(radius) {
-    return (4.0 / 3.0) * pi * Math.pow(radius, 3);
+    return Math.round(((4.0 / 3.0) * pi * Math.pow(radius, 3)) * 1000) / 1000;
 }
 
 function pythagoreOtherSide(hypotenuse, knownSide) {
-    Math.sqrt((hypotenuse * hypotenuse) - (knownSide * knownSide));
+    return Math.round((Math.sqrt((hypotenuse * hypotenuse) - (knownSide * knownSide))) * 1000) / 1000;
 }
 
 function thalesWithUnknownNumerator(knownFractionNumerator, knownFractionDenominator, knownDenominator) {
@@ -170,7 +171,15 @@ function result(calculation, explanation, result, unit = "") {
     let embed = new discord.RichEmbed();
     embed.setTitle("Résultat:");
     embed.setColor("10DA5A");
-    embed.setDescription(calculation + " = " + explanation + " = " + result + unit);
+    
+    if(Number.isInteger(result)) {
+        embed.setDescription(calculation + " = " + explanation + " = " + result + unit);
+    }
+
+    else if(!Number.isInteger(result)) {
+        embed.setDescription(calculation + " = " + explanation + " \u2243 " + result + unit);
+    }
+
     return embed;
 }
 
@@ -178,7 +187,7 @@ client.on(`ready`, () => {
     console.log(`I'm ready !`);
 });
 
-client.on(`message`, message => {
+client.on(`message`, message => {    
     if(message.content.startsWith(prefix)) {
         const args = message.content.slice(prefix.length).trim().split(/ +/g);
         const command = args.shift().toLowerCase();
@@ -248,22 +257,13 @@ client.on(`message`, message => {
         else if(command === "p") {
             if(args[0] === "square") {
                 let side = parseFloat(args[1]);
-                let unit = args[2];
 
                 if(!Number.isNaN(side) && args.length === 2) {
                     message.channel.send(result("P", side + " * 4", squarePerimeter(side)));
                 }
 
-                else if(!Number.isNaN(side) && args.length === 3 && /\d/.test(unit) === false) {
-                    message.channel.send(result("P", side + " * 4", squarePerimeter(side), unit));
-                }
-
-                else if(args.length !== 3) {
+                else if(args.length !== 2) {
                     message.channel.send(numberOfParamError(1));
-                }
-
-                else if(/\d/.test(unit) === true) {
-                    message.channel.send(typeOfUnitError());
                 }
 
                 else message.channel.send(typeOfParamError("nombres"));
@@ -272,22 +272,13 @@ client.on(`message`, message => {
             else if(args[0] === "rectangle") {
                 let length = parseFloat(args[1]);
                 let width = parseFloat(args[2]);
-                let unit = args[3];
 
                 if(!Number.isNaN(length) && !Number.isNaN(width) && args.length === 3) {
                     message.channel.send(result("P", "(" + length + " * 2) + (" + width + " * 2)", rectanglePerimeter(length, width)));
                 }
 
-                else if(!Number.isNaN(side) && args.length === 4 && /\d/.test(unit) === false) {
-                    message.channel.send(result("P", "(" + length + " * 2) + (" + width + " * 2)", rectanglePerimeter(length, width), unit));
-                }
-
                 else if(args.length !== 3) {
                     message.channel.send(numberOfParamError(2));
-                }
-
-                else if(/\d/.test(unit) === true) {
-                    message.channel.send(typeOfUnitError());
                 }
 
                 else message.channel.send(typeOfParamError("nombres"));
@@ -631,7 +622,54 @@ client.on(`message`, message => {
                 let height = parseFloat(args[2]);
 
                 if(!Number.isNaN(side) && !Number.isNaN(height) &&  args.length === 3) {
-                    message.channel.send(result("V", "(" + radius + " * " + radius + ") * " + height + " / 3", squareBasedPyramidVolume(side, height)));
+                    message.channel.send(result("V", "(" + side + " * " + side + ") * " + height + " / 3", squareBasedPyramidVolume(side, height)));
+                }
+
+                else if(args.length !== 3) {
+                    message.channel.send(numberOfParamError(2));
+                }
+
+                else message.channel.send(typeOfParamError("nombres"));
+            }
+
+            else if(args[0] === "pyramid_r") {
+                let length = parseFloat(args[1]);
+                let width = parseFloat(args[2]);
+                let height = parseFloat(args[3]);
+
+                if(!Number.isNaN(length) && !Number.isNaN(width) && !Number.isNaN(height) &&  args.length === 4) {
+                    message.channel.send(result("V", "(" + length + " * " + width + ") * " + height + " / 3", rectangleBasedPyramidVolume(side, height)));
+                }
+
+                else if(args.length !== 4) {
+                    message.channel.send(numberOfParamError(3));
+                }
+
+                else message.channel.send(typeOfParamError("nombres"));
+            }
+
+            else if(args[0] === "sphere") {
+                let radius = parseFloat(args[1]);
+
+                if(!Number.isNaN(radius) && args.length === 2) {
+                    message.channel.send(result("V", "(4 / 3) * pi * (" + radius + " * " + radius + " * " + radius + ")", sphereVolume(radius)));
+                }
+
+                else if(args.length !== 2) {
+                    message.channel.send(numberOfParamError(1));
+                }
+
+                else message.channel.send(typeOfParamError("nombres"));
+            }
+        }
+
+        else if(command === "t") {
+            if(args[0] === "pythagoreOtherSide") {
+                let hypotenuse = parseFloat(args[1]);
+                let knownSide = parseFloat(args[2]);
+
+                if(!Number.isNaN(hypotenuse) && !Number.isNaN(knownSide) && args.length === 3) {
+                    message.channel.send(result("Théorème de pythagore", "racine carrée de (" + hypotenuse + " * " + hypotenuse + ") - (" + knownSide + " * " + knownSide + ")", pythagoreOtherSide(hypotenuse, knownSide)));
                 }
 
                 else if(args.length !== 3) {
