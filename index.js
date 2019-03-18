@@ -164,14 +164,6 @@ function typeOfParamError(expectedType) {
     return embed;
 }
 
-function typeOfUnitError() {
-    let embed = new discord.RichEmbed();
-    embed.setTitle("Erreur: unité");
-    embed.setColor("FF0000");
-    embed.setDescription(`:x: les unités doivent être des lettres`);
-    return embed;
-}
-
 function result(calculation, explanation, result, unit = "") {
     let embed = new discord.RichEmbed();
     embed.setTitle("Résultat:");
