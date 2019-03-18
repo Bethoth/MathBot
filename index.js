@@ -140,6 +140,13 @@ function pythagoreOtherSide(hypotenuse, knownSide) {
     return Math.round((Math.sqrt((hypotenuse * hypotenuse) - (knownSide * knownSide))) * 1000) / 1000;
 }
 
+function inverseOfPythagoreTheorem(referenceSide, otherSide1, otherSide2) {
+    let squaredReferenceSide = referenceSide * referenceSide;
+    let squaredOtherSide1 = otherSide1 * otherSide1;
+    let squaredOtherSide2 = otherSide2 * otherSide2;
+    return squaredReferenceSide === (squaredOtherSide1 + squaredOtherSide2);
+}
+
 function thalesWithUnknownNumerator(knownFractionNumerator, knownFractionDenominator, knownDenominator) {
     return Math.round(((knownFractionNumerator * knownDenominator) / knownFractionDenominator) * 1000) / 1000;
 }
@@ -875,6 +882,26 @@ client.on(`message`, message => {
                 }
 
                 else if(knownFractionNumerator > Number.MAX_SAFE_INTEGER || knownFractionDenominator > Number.MAX_SAFE_INTEGER || knownNumerator > Number.MAX_SAFE_INTEGER) {
+                    message.channel.send(useTooBigNumbersError());
+                }
+
+                else if(args.length !== 4) {
+                    message.channel.send(numberOfParamError(3));
+                }
+
+                else message.channel.send(typeOfParamError("nombres"));
+            }
+
+            else if(args[0] === "inverseOfPythagoreTheorem") {
+                let referenceSide = parseFloat(args[1]);
+                let otherSide1 = parseFloat(args[2]);
+                let otherSide2 = parseFloat(args[3]);
+
+                if(!Number.isNaN(referenceSide) && !Number.isNaN(otherSide1) && !Number.isNaN(otherSide2) && args.length === 4 && referenceSide < Number.MAX_SAFE_INTEGER && otherSide1 < Number.MAX_SAFE_INTEGER && otherSide2 < Number.MAX_SAFE_INTEGER) {
+                    message.channel.send(result("Réciproque du théorème de Thalès", referenceSide + "² = " + otherSide1 + "² + " + otherSide2 + "² ?", inverseOfPythagoreTheorem(referenceSide, otherSide1, otherSide2)));
+                }
+
+                else if(referenceSide > Number.MAX_SAFE_INTEGER || otherSide1 > Number.MAX_SAFE_INTEGER || otherSide2 > Number.MAX_SAFE_INTEGER) {
                     message.channel.send(useTooBigNumbersError());
                 }
 
