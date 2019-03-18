@@ -150,7 +150,7 @@ function thalesWithUnknownDenominator(knownFractionNumerator, knownFractionDenom
 
 function numberOfParamError(expectedNumber) {
     let embed = new discord.RichEmbed();
-    embed.setTitle(`Erreur: nombre de paramètres`);
+    embed.setTitle(`**Erreur**: nombre de paramètres`);
     embed.setDescription(`:x: Cette commande nécessite ` + expectedNumber + ` paramètres.`);
     embed.setColor(`FF0000`);
     return embed;
@@ -158,7 +158,7 @@ function numberOfParamError(expectedNumber) {
 
 function typeOfParamError(expectedType) {
     let embed = new discord.RichEmbed();
-    embed.setTitle(`Erreur: types des paramètres`);
+    embed.setTitle(`**Erreur**: types des paramètres`);
     embed.setColor("FF0000");
     embed.setDescription(`:x: Veuillez n'utiliser que des ` + expectedType);
     return embed;
@@ -166,15 +166,23 @@ function typeOfParamError(expectedType) {
 
 function useTooBigNumbersError() {
     let embed = new discord.RichEmbed();
-    embed.setTitle(`Erreur: Utilisation de nombres trop grands`);
+    embed.setTitle(`**Erreur**: Utilisation de nombres trop grands`);
     embed.setColor("FF0000");
     embed.setDescription(`:x: Vous utilisez un nombre trop grand, la limite est de ` + Number.MAX_SAFE_INTEGER);
     return embed;
 }
 
+function byZeroDivisionError() {
+    let embed = new discord.RichEmbed();
+    embed.setTitle(`**Erreur**: Division par 0`);
+    embed.setColor("FF0000");
+    embed.setDescription(`:x: Vous ne pouvez pas effectuer de division par 0.`);
+    return embed;
+}
+
 function result(calculation, explanation, result, unit = "") {
     let embed = new discord.RichEmbed();
-    embed.setTitle("Résultat:");
+    embed.setTitle(`**Résultat**:`);
     embed.setColor("10DA5A");
     if(result < Number.MAX_SAFE_INTEGER) {
         embed.setDescription(calculation + " = " + explanation + " = " + result + unit);
@@ -182,7 +190,7 @@ function result(calculation, explanation, result, unit = "") {
 
     else if(result >= Number.MAX_SAFE_INTEGER) {
         let embed = new discord.RichEmbed();
-        embed.setTitle("Erreur: Résultat trop grand");
+        embed.setTitle(`**Erreur**: Résultat trop grand`);
         embed.setColor("FF0000");
         embed.setDescription(`:x: Le résultat de votre calcul est trop élevé pour être affiché correctement.`);
         return embed;
@@ -261,12 +269,16 @@ client.on(`message`, message => {
                 let a = parseFloat(args[0]);
                 let b = parseFloat(args[2]);
 
-                if(!Number.isNaN(a) && !Number.isNaN(b) && args.length === 3 && a < Number.MAX_SAFE_INTEGER && b < Number.MAX_SAFE_INTEGER) {
+                if(!Number.isNaN(a) && !Number.isNaN(b) && args.length === 3 && a < Number.MAX_SAFE_INTEGER && b < Number.MAX_SAFE_INTEGER && b !== 0) {
                     message.channel.send(result("Division", a + " / " + b, divide(a, b)));
                 }
 
                 else if(a > Number.MAX_SAFE_INTEGER || b > Number.MAX_SAFE_INTEGER) {
                     message.channel.send(useTooBigNumbersError());
+                }
+
+                else if(b === 0) {
+                    message.channel.send(byZeroDivisionError());
                 }
 
                 else if(args.length !== 3) {
@@ -875,3 +887,6 @@ client.on(`message`, message => {
         }
     }
 });
+
+
+client.login("NTU0Mzc1OTg0MTA4MDExNTc4.D2byhg.trxTC2P2b7pYtRre51OJ1NvN7uU");
