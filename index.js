@@ -887,6 +887,3 @@ client.on(`message`, message => {
         }
     }
 });
-
-
-client.login("NTU0Mzc1OTg0MTA4MDExNTc4.D2byhg.trxTC2P2b7pYtRre51OJ1NvN7uU");
