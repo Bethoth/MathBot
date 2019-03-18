@@ -202,7 +202,7 @@ client.on(`message`, message => {
                 let a = parseFloat(args[0]);
                 let b = parseFloat(args[2]);
 
-                if(!Number.isNaN(a) && !Number.isNaN(b) && args.length === 3) {
+                if(!Number.isNaN(a) && !Number.isNaN(b) && args.length === 3 && a < Number.MAX_SAFE_INTEGER && b < Number.MAX_SAFE_INTEGER) {
                     message.channel.send(result("Addition", a + " + " + b, add(a, b)));
                 }
 
@@ -217,7 +217,7 @@ client.on(`message`, message => {
                 let a = parseFloat(args[0]);
                 let b = parseFloat(args[2]);
 
-                if(!Number.isNaN(a) && !Number.isNaN(b) && args.length === 3) {
+                if(!Number.isNaN(a) && !Number.isNaN(b) && args.length === 3 && a < Number.MAX_SAFE_INTEGER && b < Number.MAX_SAFE_INTEGER) {
                     message.channel.send(result("Soustraction", a + " - " + b, subtract(a, b)));
                 }
 
@@ -232,7 +232,7 @@ client.on(`message`, message => {
                 let a = parseFloat(args[0]);
                 let b = parseFloat(args[2]);
 
-                if(!Number.isNaN(a) && !Number.isNaN(b) && args.length === 3) {
+                if(!Number.isNaN(a) && !Number.isNaN(b) && args.length === 3 && a < Number.MAX_SAFE_INTEGER && b < Number.MAX_SAFE_INTEGER) {
                     message.channel.send(result("Multiplication", a + " * " + b, multiply(a, b)));
                 }
 
@@ -247,7 +247,7 @@ client.on(`message`, message => {
                 let a = parseFloat(args[0]);
                 let b = parseFloat(args[2]);
 
-                if(!Number.isNaN(a) && !Number.isNaN(b) && args.length === 3) {
+                if(!Number.isNaN(a) && !Number.isNaN(b) && args.length === 3 && a < Number.MAX_SAFE_INTEGER && b < Number.MAX_SAFE_INTEGER) {
                     message.channel.send(result("Division", a + " / " + b, divide(a, b)));
                 }
 
@@ -263,7 +263,7 @@ client.on(`message`, message => {
             if(args[0] === "square") {
                 let side = parseFloat(args[1]);
 
-                if(!Number.isNaN(side) && args.length === 2) {
+                if(!Number.isNaN(side) && args.length === 2 && side < Number.MAX_SAFE_INTEGER) {
                     message.channel.send(result("P", side + " * 4", squarePerimeter(side)));
                 }
 
@@ -278,7 +278,7 @@ client.on(`message`, message => {
                 let length = parseFloat(args[1]);
                 let width = parseFloat(args[2]);
 
-                if(!Number.isNaN(length) && !Number.isNaN(width) && args.length === 3) {
+                if(!Number.isNaN(length) && !Number.isNaN(width) && args.length === 3 && length < Number.MAX_SAFE_INTEGER && width < Number.MAX_SAFE_INTEGER) {
                     message.channel.send(result("P", "(" + length + " * 2) + (" + width + " * 2)", rectanglePerimeter(length, width)));
                 }
 
@@ -292,7 +292,7 @@ client.on(`message`, message => {
             else if(args[0] === "circle") {
                 let radius = parseFloat(args[1]);
 
-                if(!Number.isNaN(radius) && args.length === 2) {
+                if(!Number.isNaN(radius) && args.length === 2 && radius < Number.MAX_SAFE_INTEGER) {
                     message.channel.send(result("P", "pi * 2 * " + radius, circlePerimeter(radius)));
                 }
 
@@ -308,7 +308,7 @@ client.on(`message`, message => {
                 let side1 = parseFloat(args[2]);
                 let side2 = parseFloat(args[3]);
 
-                if(!Number.isNaN(base) && !Number.isNaN(side1) && !Number.isNaN(side2) && args.length === 4) {
+                if(!Number.isNaN(base) && !Number.isNaN(side1) && !Number.isNaN(side2) && args.length === 4 && base < Number.MAX_SAFE_INTEGER && side1 < Number.MAX_SAFE_INTEGER && side2 < Number.MAX_SAFE_INTEGER) {
                     message.channel.send(result("P", base + " + " + side1 + " + " + side2, trianglePerimeter(base, side1, side2)));
                 }
 
@@ -323,7 +323,7 @@ client.on(`message`, message => {
                 let side1 = parseFloat(args[1]);
                 let side2 = parseFloat(args[2]);
 
-                if(!Number.isNaN(side1) && !Number.isNaN(side2) && args.length === 3) {
+                if(!Number.isNaN(side1) && !Number.isNaN(side2) && args.length === 3 && side1 < Number.MAX_SAFE_INTEGER && side2 < Number.MAX_SAFE_INTEGER) {
                     message.channel.send(result("P", "(" + side1 + " * 2) + (" + side2 + " * 2)", parallelogramPerimeter(side1, side2)));
                 }
 
@@ -340,7 +340,7 @@ client.on(`message`, message => {
                 let side1 = parseFloat(args[3]);
                 let side2 = parseFloat(args[4]);
 
-                if(!Number.isNaN(base1) && !Number.isNaN(base2) && !Number.isNaN(side1) && !Number.isNaN(side2) && args.length === 5) {
+                if(!Number.isNaN(base1) && !Number.isNaN(base2) && !Number.isNaN(side1) && !Number.isNaN(side2) && args.length === 5 && base1 < Number.MAX_SAFE_INTEGER && base2 < Number.MAX_SAFE_INTEGER && side1 < Number.MAX_SAFE_INTEGER && side2 < Number.MAX_SAFE_INTEGER) {
                     message.channel.send(result("P", base1 + " + " + base2 + " + " + side1 + " + " + side2, trapezePerimeter(base1, base2, side1, side2)));
                 }
 
@@ -354,7 +354,7 @@ client.on(`message`, message => {
             else if(args[0] === "diamond") {
                 let side = parseFloat(args[1]);
 
-                if(!Number.isNaN(side) && args.length === 2) {
+                if(!Number.isNaN(side) && args.length === 2 && side < Number.MAX_SAFE_INTEGER) {
                     message.channel.send(result("P", side + " * 4", diamondPerimeter(side)));
                 }
 
@@ -370,7 +370,7 @@ client.on(`message`, message => {
             if(args[0] === "square") {
                 let side = parseFloat(args[1]);
 
-                if(!Number.isNaN(side) && args.length === 2) {
+                if(!Number.isNaN(side) && args.length === 2 && side < Number.MAX_SAFE_INTEGER) {
                     message.channel.send(result("A", side + " * " + side, squareArea(side)));
                 }
 
@@ -385,7 +385,7 @@ client.on(`message`, message => {
                 let length = parseFloat(args[1]);
                 let width = parseFloat(args[2]);
 
-                if(!Number.isNaN(length) && !Number.isNaN(width) && args.length === 3) {
+                if(!Number.isNaN(length) && !Number.isNaN(width) && args.length === 3 && length < Number.MAX_SAFE_INTEGER && width < Number.MAX_SAFE_INTEGER) {
                     message.channel.send(result("A", length + " * " + width, rectangleArea(length, width)));
                 }
 
@@ -399,7 +399,7 @@ client.on(`message`, message => {
             else if(args[0] === "disk") {
                 let radius = parseFloat(args[1]);
 
-                if(!Number.isNaN(radius) && args.length === 2) {
+                if(!Number.isNaN(radius) && args.length === 2 && radius < Number.MAX_SAFE_INTEGER) {
                     message.channel.send(result("A", "(" + radius + " * " + radius + ") * pi", diskArea(radius)));
                 }
 
@@ -414,7 +414,7 @@ client.on(`message`, message => {
                 let base = parseFloat(args[1]);
                 let height = parseFloat(args[2]);
 
-                if(!Number.isNaN(base) && !Number.isNaN(height) && args.length === 3) {
+                if(!Number.isNaN(base) && !Number.isNaN(height) && args.length === 3 && base < Number.MAX_SAFE_INTEGER && height < Number.MAX_SAFE_INTEGER) {
                     message.channel.send(result("A", base + " * " + height, parallelogramArea(base, height)));
                 }
 
@@ -429,7 +429,7 @@ client.on(`message`, message => {
                 let base = parseFloat(args[1]);
                 let height = parseFloat(args[2]);
 
-                if(!Number.isNaN(base) && !Number.isNaN(height) && args.length === 3) {
+                if(!Number.isNaN(base) && !Number.isNaN(height) && args.length === 3 && base < Number.MAX_SAFE_INTEGER && height < Number.MAX_SAFE_INTEGER) {
                     message.channel.send(result("A", "(" + base + " * " + height + ") / 2", triangleArea(base, height)));
                 }
 
@@ -445,7 +445,7 @@ client.on(`message`, message => {
                 let base2 = parseFloat(args[2]);
                 let height = parseFloat(args[3]);
 
-                if(!Number.isNaN(base1) && !Number.isNaN(base2) && !Number.isNaN(height) && args.length === 4) {
+                if(!Number.isNaN(base1) && !Number.isNaN(base2) && !Number.isNaN(height) && args.length === 4 && base1 < Number.MAX_SAFE_INTEGER && base2 < Number.MAX_SAFE_INTEGER && height < Number.MAX_SAFE_INTEGER) {
                     message.channel.send(result("A", "((" + base1 + " + " + base2 + ") * " + height + ") / 2", trapezeArea(base1, base2, height)));
                 }
 
@@ -460,7 +460,7 @@ client.on(`message`, message => {
                 let diagonal1 = parseFloat(args[1]);
                 let diagonal2 = parseFloat(args[2]);
 
-                if(!Number.isNaN(diagonal1) && !Number.isNaN(diagonal2) && args.length === 3) {
+                if(!Number.isNaN(diagonal1) && !Number.isNaN(diagonal2) && args.length === 3 && diagonal1 < Number.MAX_SAFE_INTEGER && diagonal2 < Number.MAX_SAFE_INTEGER) {
                     message.channel.send(result("A", diagonal1 + " * " + diagonal2 + " / 2", diamondArea(diagonal1, diagonal2)));
                 }
 
@@ -474,7 +474,7 @@ client.on(`message`, message => {
             else if(args[0] === "sphere") {
                 let radius = parseFloat(args[1]);
 
-                if(!Number.isNaN(radius) && args.length === 2) {
+                if(!Number.isNaN(radius) && args.length === 2 && radius < Number.MAX_SAFE_INTEGER) {
                     message.channel.send(result("A", "(" + radius + " * " + radius + ") * (pi * 4)", sphereArea(radius)));
                 }
 
@@ -489,7 +489,7 @@ client.on(`message`, message => {
                 let radius = parseFloat(args[1]);
                 let height = parseFloat(args[2]);
 
-                if(!Number.isNaN(radius) && !Number.isNaN(height) && args.length === 3) {
+                if(!Number.isNaN(radius) && !Number.isNaN(height) && args.length === 3 && radius < Number.MAX_SAFE_INTEGER && height < Number.MAX_SAFE_INTEGER) {
                     message.channel.send(result("A", "racine carrée de ((" + radius + " * " + radius + ") + (" + height + " * " + height + ")) * pi * " + radius, coneArea(radius, height)));
                 }
 
@@ -503,7 +503,7 @@ client.on(`message`, message => {
             else if(args[0] === "cube") {
                 let arete = parseFloat(args[1]);
 
-                if(!Number.isNaN(arete) && args.length === 1) {
+                if(!Number.isNaN(arete) && args.length === 1 && arete < Number.MAX_SAFE_INTEGER) {
                     message.channel.send(result("A", arete + " * " + arete + " * 6", cubeArea(arete)));
                 }
 
@@ -519,7 +519,7 @@ client.on(`message`, message => {
                 let width = parseFloat(args[2]);
                 let height = parseFloat(args[3]);
 
-                if(!Number.isNaN(length) && !Number.isNaN(width) && !Number.isNaN(height) && args.length === 3) {
+                if(!Number.isNaN(length) && !Number.isNaN(width) && !Number.isNaN(height) && args.length === 3 && length < Number.MAX_SAFE_INTEGER && width < Number.MAX_SAFE_INTEGER && height < Number.MAX_SAFE_INTEGER) {
                     message.channel.send(result("A", "(" + length + " * " + width + ") + (" + width + " * " + height + ") + (" + length + " * " + width + ")", rectangleCuboidArea(length, width, height)));
                 }
 
@@ -534,7 +534,7 @@ client.on(`message`, message => {
                 let radius = parseFloat(args[1]);
                 let height = parseFloat(args[2]);
 
-                if(!Number.isNaN(radius) && !Number.isNaN(height) && args.length === 2) {
+                if(!Number.isNaN(radius) && !Number.isNaN(height) && args.length === 3 && radius < Number.MAX_SAFE_INTEGER && height < Number.MAX_SAFE_INTEGER) {
                     message.channel.send(result("A", "pi * (" + radius + " * " + radius + ") * " + height, cylinderArea(radius, height)));
                 }
 
@@ -549,7 +549,7 @@ client.on(`message`, message => {
                 let baseSide = parseFloat(args[1]);
                 let height = parseFloat(args[2]);
 
-                if(!Number.isNaN(baseSide) && !Number.isNaN(height) && args.length === 2) {
+                if(!Number.isNaN(baseSide) && !Number.isNaN(height) && args.length === 3 && baseSide < Number.MAX_SAFE_INTEGER && height < Number.MAX_SAFE_INTEGER) {
                     message.channel.send(result("A", "(" + baseSide + " * 4 * racine carrée de ((" + height + " * " + height + ") + (" + baseSide + " / 2) * (" + baseSide + " / 2)) / 2", squareBasedPyramidArea(baseSide, height)));
                 }
 
@@ -565,7 +565,7 @@ client.on(`message`, message => {
             if(args[0] === "cube") {
                 let arete = parseFloat(args[1]);
 
-                if(!Number.isNaN(arete) && args.length === 2) {
+                if(!Number.isNaN(arete) && args.length === 2 && arete < Number.MAX_SAFE_INTEGER) {
                     message.channel.send(result("V", arete + " * " + arete + " * " + arete, cubeVolume(arete)));
                 }
 
@@ -581,7 +581,7 @@ client.on(`message`, message => {
                 let width = parseFloat(args[2]);
                 let height = parseFloat(args[3]);
 
-                if(!Number.isNaN(length) && !Number.isNaN(width) && !Number.isNaN(height) && args.length === 4) {
+                if(!Number.isNaN(length) && !Number.isNaN(width) && !Number.isNaN(height) && args.length === 4 && length < Number.MAX_SAFE_INTEGER && width < Number.MAX_SAFE_INTEGER && height < Number.MAX_SAFE_INTEGER) {
                     message.channel.send(result("V", length + " * " + width + " * " + height, rectangleCuboidVolume(length, width, height)));
                 }
 
@@ -596,7 +596,7 @@ client.on(`message`, message => {
                 let radius = parseFloat(args[1]);
                 let height = parseFloat(args[2]);
 
-                if(!Number.isNaN(radius) && !Number.isNaN(height) &&  args.length === 3) {
+                if(!Number.isNaN(radius) && !Number.isNaN(height) &&  args.length === 3 && radius < Number.MAX_SAFE_INTEGER && height < Number.MAX_SAFE_INTEGER) {
                     message.channel.send(result("V", "pi * (" + radius + " * " + radius + ") * " + height, cylinderVolume(radius, height)));
                 }
 
@@ -611,7 +611,7 @@ client.on(`message`, message => {
                 let radius = parseFloat(args[1]);
                 let height = parseFloat(args[2]);
 
-                if(!Number.isNaN(radius) && !Number.isNaN(height) &&  args.length === 3) {
+                if(!Number.isNaN(radius) && !Number.isNaN(height) &&  args.length === 3 && radius < Number.MAX_SAFE_INTEGER && height < Number.MAX_SAFE_INTEGER) {
                     message.channel.send(result("V", "pi * (" + radius + " * " + radius + ") * " + height + " / 3", coneVolume(radius, height)));
                 }
 
@@ -626,7 +626,7 @@ client.on(`message`, message => {
                 let side = parseFloat(args[1]);
                 let height = parseFloat(args[2]);
 
-                if(!Number.isNaN(side) && !Number.isNaN(height) &&  args.length === 3) {
+                if(!Number.isNaN(side) && !Number.isNaN(height) &&  args.length === 3 && side < Number.MAX_SAFE_INTEGER && height < Number.MAX_SAFE_INTEGER) {
                     message.channel.send(result("V", "(" + side + " * " + side + ") * " + height + " / 3", squareBasedPyramidVolume(side, height)));
                 }
 
@@ -642,7 +642,7 @@ client.on(`message`, message => {
                 let width = parseFloat(args[2]);
                 let height = parseFloat(args[3]);
 
-                if(!Number.isNaN(length) && !Number.isNaN(width) && !Number.isNaN(height) &&  args.length === 4) {
+                if(!Number.isNaN(length) && !Number.isNaN(width) && !Number.isNaN(height) &&  args.length === 4 && length < Number.MAX_SAFE_INTEGER && width < Number.MAX_SAFE_INTEGER && height < Number.MAX_SAFE_INTEGER) {
                     message.channel.send(result("V", "(" + length + " * " + width + ") * " + height + " / 3", rectangleBasedPyramidVolume(side, height)));
                 }
 
@@ -656,7 +656,7 @@ client.on(`message`, message => {
             else if(args[0] === "sphere") {
                 let radius = parseFloat(args[1]);
 
-                if(!Number.isNaN(radius) && args.length === 2) {
+                if(!Number.isNaN(radius) && args.length === 2 && radius < Number.MAX_SAFE_INTEGER) {
                     message.channel.send(result("V", "(4 / 3) * pi * (" + radius + " * " + radius + " * " + radius + ")", sphereVolume(radius)));
                 }
 
@@ -673,7 +673,7 @@ client.on(`message`, message => {
                 let hypotenuse = parseFloat(args[1]);
                 let knownSide = parseFloat(args[2]);
 
-                if(!Number.isNaN(hypotenuse) && !Number.isNaN(knownSide) && args.length === 3) {
+                if(!Number.isNaN(hypotenuse) && !Number.isNaN(knownSide) && args.length === 3 && hypotenuse < Number.MAX_SAFE_INTEGER && knownSide < Number.MAX_SAFE_INTEGER) {
                     message.channel.send(result("Théorème de Pythagore", "racine carrée de (" + hypotenuse + " * " + hypotenuse + ") - (" + knownSide + " * " + knownSide + ")", pythagoreOtherSide(hypotenuse, knownSide)));
                 }
 
@@ -688,7 +688,7 @@ client.on(`message`, message => {
                 let knownSide1 = parseFloat(args[1]);
                 let knownSide2 = parseFloat(args[2]);
 
-                if(!Number.isNaN(knownSide1) && !Number.isNaN(knownSide2) && args.length === 3) {
+                if(!Number.isNaN(knownSide1) && !Number.isNaN(knownSide2) && args.length === 3 && knownSide1 < Number.MAX_SAFE_INTEGER && knownSide2 < Number.MAX_SAFE_INTEGER) {
                     message.channel.send(result("Théorème de Pythagore", "racine carrée de (" + knownSide1 + " * " + knownSide1 + ") + (" + knownSide2 + " * " + knownSide2 + ")", Math.round((Math.hypot(knownSide1, knownSide2) * 1000)) / 1000;
                 }
 
@@ -704,7 +704,7 @@ client.on(`message`, message => {
                 let knownFractionDenominator = parseFloat(args[2]);
                 let knownDenominator = parseFloat(args[3]);
 
-                if(!Number.isNaN(knownFractionNumerator) && !Number.isNaN(knownFractionDenominator) && !Number.isNaN(knownDenominator) && args.length === 4) {
+                if(!Number.isNaN(knownFractionNumerator) && !Number.isNaN(knownFractionDenominator) && !Number.isNaN(knownDenominator) && args.length === 4 && knownFractionNumerator < Number.MAX_SAFE_INTEGER && knownFractionDenominator < Number.MAX_SAFE_INTEGER && knownDenominator < Number.MAX_SAFE_INTEGER) {
                     message.channel.send(result("Théorème de Thalès", "(" + knownFractionNumerator + " * " + knownDenominator + ") / " + knownFractionDenominator, thalesWithUnknownNumerator(knownFractionNumerator, knownFractionDenominator, knownDenominator)));
                 }
 
@@ -720,7 +720,7 @@ client.on(`message`, message => {
                 let knownFractionDenominator = parseFloat(args[2]);
                 let knownNumerator = parseFloat(args[3]);
 
-                if(!Number.isNaN(knownFractionNumerator) && !Number.isNaN(knownFractionDenominator) && !Number.isNaN(knownNumerator) && args.length === 4) {
+                if(!Number.isNaN(knownFractionNumerator) && !Number.isNaN(knownFractionDenominator) && !Number.isNaN(knownNumerator) && args.length === 4 && knownFractionNumerator < Number.MAX_SAFE_INTEGER && knownFractionDenominator < Number.MAX_SAFE_INTEGER && knownNumerator < Number.MAX_SAFE_INTEGER) {
                     message.channel.send(result("Théorème de Thalès", "(" + knownFractionDenominator + " * " + knownNumerator + ") / " + knownFractionNumerator, thalesWithUnknownDenominator(knownFractionNumerator, knownFractionDenominator, knownNumerator)));
                 }
 
