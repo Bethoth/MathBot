@@ -141,11 +141,11 @@ function pythagoreOtherSide(hypotenuse, knownSide) {
 }
 
 function thalesWithUnknownNumerator(knownFractionNumerator, knownFractionDenominator, knownDenominator) {
-    return (knownFractionNumerator * knownDenominator) / knownFractionDenominator;
+    return Math.round(((knownFractionNumerator * knownDenominator) / knownFractionDenominator) * 1000) / 1000;
 }
 
 function thalesWithUnknownDenominator(knownFractionNumerator, knownFractionDenominator, knownNumerator) {
-    return (knownFractionDenominator * knownNumerator) / knownFractionNumerator;
+    return Math.round(((knownFractionDenominator * knownNumerator) / knownFractionNumerator) * 1000) / 1000;
 }
 
 function numberOfParamError(expectedNumber) {
@@ -674,11 +674,58 @@ client.on(`message`, message => {
                 let knownSide = parseFloat(args[2]);
 
                 if(!Number.isNaN(hypotenuse) && !Number.isNaN(knownSide) && args.length === 3) {
-                    message.channel.send(result("Théorème de pythagore", "racine carrée de (" + hypotenuse + " * " + hypotenuse + ") - (" + knownSide + " * " + knownSide + ")", pythagoreOtherSide(hypotenuse, knownSide)));
+                    message.channel.send(result("Théorème de Pythagore", "racine carrée de (" + hypotenuse + " * " + hypotenuse + ") - (" + knownSide + " * " + knownSide + ")", pythagoreOtherSide(hypotenuse, knownSide)));
                 }
 
                 else if(args.length !== 3) {
                     message.channel.send(numberOfParamError(2));
+                }
+
+                else message.channel.send(typeOfParamError("nombres"));
+            }
+            
+            else if(args[0] === "pythagoreHypotenuse") {
+                let knownSide1 = parseFloat(args[1]);
+                let knownSide2 = parseFloat(args[2]);
+
+                if(!Number.isNaN(knownSide1) && !Number.isNaN(knownSide2) && args.length === 3) {
+                    message.channel.send(result("Théorème de Pythagore", "racine carrée de (" + knownSide1 + " * " + knownSide1 + ") + (" + knownSide2 + " * " + knownSide2 + ")", Math.round((Math.hypot(knownSide1, knownSide2) * 1000)) / 1000;
+                }
+
+                else if(args.length !== 3) {
+                    message.channel.send(numberOfParamError(2));
+                }
+
+                else message.channel.send(typeOfParamError("nombres"));
+            }
+            
+            else if(args[0] === "thalesWithUnknownNumerator") {
+                let knownFractionNumerator = parseFloat(args[1]);
+                let knownFractionDenominator = parseFloat(args[2]);
+                let knownDenominator = parseFloat(args[3]);
+
+                if(!Number.isNaN(knownFractionNumerator) && !Number.isNaN(knownFractionDenominator) && !Number.isNaN(knownDenominator) && args.length === 4) {
+                    message.channel.send(result("Théorème de Thalès", "(" + knownFractionNumerator + " * " + knownDenominator + ") / " + knownFractionDenominator, thalesWithUnknownNumerator(knownFractionNumerator, knownFractionDenominator, knownDenominator)));
+                }
+
+                else if(args.length !== 4) {
+                    message.channel.send(numberOfParamError(3));
+                }
+
+                else message.channel.send(typeOfParamError("nombres"));
+            }
+            
+            else if(args[0] === "thalesWithUnknownDenominator") {
+                let knownFractionNumerator = parseFloat(args[1]);
+                let knownFractionDenominator = parseFloat(args[2]);
+                let knownNumerator = parseFloat(args[3]);
+
+                if(!Number.isNaN(knownFractionNumerator) && !Number.isNaN(knownFractionDenominator) && !Number.isNaN(knownNumerator) && args.length === 4) {
+                    message.channel.send(result("Théorème de Thalès", "(" + knownFractionDenominator + " * " + knownNumerator + ") / " + knownFractionNumerator, thalesWithUnknownDenominator(knownFractionNumerator, knownFractionDenominator, knownNumerator)));
+                }
+
+                else if(args.length !== 4) {
+                    message.channel.send(numberOfParamError(3));
                 }
 
                 else message.channel.send(typeOfParamError("nombres"));
