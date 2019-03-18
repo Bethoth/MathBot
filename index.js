@@ -160,7 +160,15 @@ function typeOfParamError(expectedType) {
     let embed = new discord.RichEmbed();
     embed.setTitle(`Erreur: types des paramètres`);
     embed.setColor("FF0000");
-    embed.setDescription(`:x: veuillez n'utiliser que des ` + expectedType);
+    embed.setDescription(`:x: Veuillez n'utiliser que des ` + expectedType);
+    return embed;
+}
+
+function useTooBigNumbersError() {
+    let embed = new discord.RichEmbed();
+    embed.setTitle(`Erreur: Utilisation de nombres trop grands`);
+    embed.setColor("FF0000");
+    embed.setDescription(`:x: Vous utilisez un nombre trop grand, la limite est de ` + Number.MAX_SAFE_INTEGER);
     return embed;
 }
 
@@ -168,15 +176,17 @@ function result(calculation, explanation, result, unit = "") {
     let embed = new discord.RichEmbed();
     embed.setTitle("Résultat:");
     embed.setColor("10DA5A");
-    
-    if(Number.isInteger(result) || countDecimals(result) <= 3) {
+    if(result < Number.MAX_SAFE_INTEGER) {
         embed.setDescription(calculation + " = " + explanation + " = " + result + unit);
     }
 
-    else if(!Number.isInteger(result) && countDecimals(result) > 3) {
-        embed.setDescription(calculation + " = " + explanation + " \u2243 " + result + unit);
+    else if(result >= Number.MAX_SAFE_INTEGER) {
+        let embed = new discord.RichEmbed();
+        embed.setTitle("Erreur: Résultat trop grand");
+        embed.setColor("FF0000");
+        embed.setDescription(`:x: Le résultat de votre calcul est trop élevé pour être affiché correctement.`);
+        return embed;
     }
-
     return embed;
 }
 
@@ -184,7 +194,7 @@ client.on(`ready`, () => {
     console.log(`I'm ready !`);
 });
 
-client.on(`message`, message => {    
+client.on(`message`, message => {
     if(message.content.startsWith(prefix)) {
         const args = message.content.slice(prefix.length).trim().split(/ +/g);
         const command = args.shift().toLowerCase();
@@ -196,6 +206,10 @@ client.on(`message`, message => {
 
                 if(!Number.isNaN(a) && !Number.isNaN(b) && args.length === 3 && a < Number.MAX_SAFE_INTEGER && b < Number.MAX_SAFE_INTEGER) {
                     message.channel.send(result("Addition", a + " + " + b, add(a, b)));
+                }
+
+                else if(a > Number.MAX_SAFE_INTEGER || b > Number.MAX_SAFE_INTEGER) {
+                    message.channel.send(useTooBigNumbersError());
                 }
 
                 else if(args.length !== 3) {
@@ -213,6 +227,10 @@ client.on(`message`, message => {
                     message.channel.send(result("Soustraction", a + " - " + b, subtract(a, b)));
                 }
 
+                else if(a > Number.MAX_SAFE_INTEGER || b > Number.MAX_SAFE_INTEGER) {
+                    message.channel.send(useTooBigNumbersError());
+                }
+
                 else if(args.length !== 3) {
                     message.channel.send(numberOfParamError(2));
                 }
@@ -228,6 +246,10 @@ client.on(`message`, message => {
                     message.channel.send(result("Multiplication", a + " * " + b, multiply(a, b)));
                 }
 
+                else if(a > Number.MAX_SAFE_INTEGER || b > Number.MAX_SAFE_INTEGER) {
+                    message.channel.send(useTooBigNumbersError());
+                }
+
                 else if(args.length !== 3) {
                     message.channel.send(numberOfParamError(2));
                 }
@@ -241,6 +263,10 @@ client.on(`message`, message => {
 
                 if(!Number.isNaN(a) && !Number.isNaN(b) && args.length === 3 && a < Number.MAX_SAFE_INTEGER && b < Number.MAX_SAFE_INTEGER) {
                     message.channel.send(result("Division", a + " / " + b, divide(a, b)));
+                }
+
+                else if(a > Number.MAX_SAFE_INTEGER || b > Number.MAX_SAFE_INTEGER) {
+                    message.channel.send(useTooBigNumbersError());
                 }
 
                 else if(args.length !== 3) {
@@ -259,6 +285,10 @@ client.on(`message`, message => {
                     message.channel.send(result("P", side + " * 4", squarePerimeter(side)));
                 }
 
+                else if(side > Number.MAX_SAFE_INTEGER) {
+                    message.channel.send(useTooBigNumbersError());
+                }
+
                 else if(args.length !== 2) {
                     message.channel.send(numberOfParamError(1));
                 }
@@ -274,6 +304,10 @@ client.on(`message`, message => {
                     message.channel.send(result("P", "(" + length + " * 2) + (" + width + " * 2)", rectanglePerimeter(length, width)));
                 }
 
+                else if(length > Number.MAX_SAFE_INTEGER || width > Number.MAX_SAFE_INTEGER) {
+                    message.channel.send(useTooBigNumbersError());
+                }
+
                 else if(args.length !== 3) {
                     message.channel.send(numberOfParamError(2));
                 }
@@ -286,6 +320,10 @@ client.on(`message`, message => {
 
                 if(!Number.isNaN(radius) && args.length === 2 && radius < Number.MAX_SAFE_INTEGER) {
                     message.channel.send(result("P", "pi * 2 * " + radius, circlePerimeter(radius)));
+                }
+
+                else if(radius > Number.MAX_SAFE_INTEGER) {
+                    message.channel.send(useTooBigNumbersError());
                 }
 
                 else if(args.length !== 2) {
@@ -304,6 +342,10 @@ client.on(`message`, message => {
                     message.channel.send(result("P", base + " + " + side1 + " + " + side2, trianglePerimeter(base, side1, side2)));
                 }
 
+                else if(base > Number.MAX_SAFE_INTEGER || side1 > Number.MAX_SAFE_INTEGER || side2 > Number.MAX_SAFE_INTEGER) {
+                    message.channel.send(useTooBigNumbersError());
+                }
+
                 else if(args.length !== 4) {
                     message.channel.send(numberOfParamError(3));
                 }
@@ -317,6 +359,10 @@ client.on(`message`, message => {
 
                 if(!Number.isNaN(side1) && !Number.isNaN(side2) && args.length === 3 && side1 < Number.MAX_SAFE_INTEGER && side2 < Number.MAX_SAFE_INTEGER) {
                     message.channel.send(result("P", "(" + side1 + " * 2) + (" + side2 + " * 2)", parallelogramPerimeter(side1, side2)));
+                }
+
+                else if(side1 > Number.MAX_SAFE_INTEGER || side2 > Number.MAX_SAFE_INTEGER) {
+                    message.channel.send(useTooBigNumbersError());
                 }
 
                 else if(args.length !== 3) {
@@ -336,6 +382,10 @@ client.on(`message`, message => {
                     message.channel.send(result("P", base1 + " + " + base2 + " + " + side1 + " + " + side2, trapezePerimeter(base1, base2, side1, side2)));
                 }
 
+                else if(base1 > Number.MAX_SAFE_INTEGER || base2 > Number.MAX_SAFE_INTEGER || side1 > Number.MAX_SAFE_INTEGER || side2 > Number.MAX_SAFE_INTEGER) {
+                    message.channel.send(useTooBigNumbersError());
+                }
+
                 else if(args.length !== 5) {
                     message.channel.send(numberOfParamError(4));
                 }
@@ -348,6 +398,10 @@ client.on(`message`, message => {
 
                 if(!Number.isNaN(side) && args.length === 2 && side < Number.MAX_SAFE_INTEGER) {
                     message.channel.send(result("P", side + " * 4", diamondPerimeter(side)));
+                }
+
+                else if(side > Number.MAX_SAFE_INTEGER) {
+                    message.channel.send(useTooBigNumbersError());
                 }
 
                 else if(args.length !== 2) {
@@ -366,6 +420,10 @@ client.on(`message`, message => {
                     message.channel.send(result("A", side + " * " + side, squareArea(side)));
                 }
 
+                else if(side > Number.MAX_SAFE_INTEGER) {
+                    message.channel.send(useTooBigNumbersError());
+                }
+
                 else if(args.length !== 2) {
                     message.channel.send(numberOfParamError(1));
                 }
@@ -381,6 +439,10 @@ client.on(`message`, message => {
                     message.channel.send(result("A", length + " * " + width, rectangleArea(length, width)));
                 }
 
+                else if(length > Number.MAX_SAFE_INTEGER || width > Number.MAX_SAFE_INTEGER) {
+                    message.channel.send(useTooBigNumbersError());
+                }
+
                 else if(args.length !== 3) {
                     message.channel.send(numberOfParamError(2));
                 }
@@ -393,6 +455,10 @@ client.on(`message`, message => {
 
                 if(!Number.isNaN(radius) && args.length === 2 && radius < Number.MAX_SAFE_INTEGER) {
                     message.channel.send(result("A", "(" + radius + " * " + radius + ") * pi", diskArea(radius)));
+                }
+
+                else if(radius > Number.MAX_SAFE_INTEGER) {
+                    message.channel.send(useTooBigNumbersError());
                 }
 
                 else if(args.length !== 2) {
@@ -410,6 +476,10 @@ client.on(`message`, message => {
                     message.channel.send(result("A", base + " * " + height, parallelogramArea(base, height)));
                 }
 
+                else if(base > Number.MAX_SAFE_INTEGER || height > Number.MAX_SAFE_INTEGER) {
+                    message.channel.send(useTooBigNumbersError());
+                }
+
                 else if(args.length !== 3) {
                     message.channel.send(numberOfParamError(2));
                 }
@@ -423,6 +493,10 @@ client.on(`message`, message => {
 
                 if(!Number.isNaN(base) && !Number.isNaN(height) && args.length === 3 && base < Number.MAX_SAFE_INTEGER && height < Number.MAX_SAFE_INTEGER) {
                     message.channel.send(result("A", "(" + base + " * " + height + ") / 2", triangleArea(base, height)));
+                }
+
+                else if(base > Number.MAX_SAFE_INTEGER || height > Number.MAX_SAFE_INTEGER) {
+                    message.channel.send(useTooBigNumbersError());
                 }
 
                 else if(args.length !== 3) {
@@ -441,6 +515,10 @@ client.on(`message`, message => {
                     message.channel.send(result("A", "((" + base1 + " + " + base2 + ") * " + height + ") / 2", trapezeArea(base1, base2, height)));
                 }
 
+                else if(base1 > Number.MAX_SAFE_INTEGER || base2 > Number.MAX_SAFE_INTEGER || height > Number.MAX_SAFE_INTEGER) {
+                    message.channel.send(useTooBigNumbersError());
+                }
+
                 else if(args.length !== 4) {
                     message.channel.send(numberOfParamError(3));
                 }
@@ -456,6 +534,10 @@ client.on(`message`, message => {
                     message.channel.send(result("A", diagonal1 + " * " + diagonal2 + " / 2", diamondArea(diagonal1, diagonal2)));
                 }
 
+                else if(diagonal1 > Number.MAX_SAFE_INTEGER || diagonal2 > Number.MAX_SAFE_INTEGER) {
+                    message.channel.send(useTooBigNumbersError());
+                }
+
                 else if(args.length !== 3) {
                     message.channel.send(numberOfParamError(2));
                 }
@@ -468,6 +550,10 @@ client.on(`message`, message => {
 
                 if(!Number.isNaN(radius) && args.length === 2 && radius < Number.MAX_SAFE_INTEGER) {
                     message.channel.send(result("A", "(" + radius + " * " + radius + ") * (pi * 4)", sphereArea(radius)));
+                }
+
+                else if(radius > Number.MAX_SAFE_INTEGER) {
+                    message.channel.send(useTooBigNumbersError());
                 }
 
                 else if(args.length !== 2) {
@@ -485,6 +571,10 @@ client.on(`message`, message => {
                     message.channel.send(result("A", "racine carrée de ((" + radius + " * " + radius + ") + (" + height + " * " + height + ")) * pi * " + radius, coneArea(radius, height)));
                 }
 
+                else if(radius > Number.MAX_SAFE_INTEGER || height > Number.MAX_SAFE_INTEGER) {
+                    message.channel.send(useTooBigNumbersError());
+                }
+
                 else if(args.length !== 3) {
                     message.channel.send(numberOfParamError(2));
                 }
@@ -497,6 +587,10 @@ client.on(`message`, message => {
 
                 if(!Number.isNaN(arete) && args.length === 1 && arete < Number.MAX_SAFE_INTEGER) {
                     message.channel.send(result("A", arete + " * " + arete + " * 6", cubeArea(arete)));
+                }
+
+                else if(arete > Number.MAX_SAFE_INTEGER) {
+                    message.channel.send(useTooBigNumbersError());
                 }
 
                 else if(args.length !== 2) {
@@ -515,6 +609,10 @@ client.on(`message`, message => {
                     message.channel.send(result("A", "(" + length + " * " + width + ") + (" + width + " * " + height + ") + (" + length + " * " + width + ")", rectangleCuboidArea(length, width, height)));
                 }
 
+                else if(length > Number.MAX_SAFE_INTEGER || width > Number.MAX_SAFE_INTEGER || height > Number.MAX_SAFE_INTEGER) {
+                    message.channel.send(useTooBigNumbersError());
+                }
+
                 else if(args.length !== 4) {
                     message.channel.send(numberOfParamError(3));
                 }
@@ -530,6 +628,10 @@ client.on(`message`, message => {
                     message.channel.send(result("A", "pi * (" + radius + " * " + radius + ") * " + height, cylinderArea(radius, height)));
                 }
 
+                else if(radius > Number.MAX_SAFE_INTEGER || height > Number.MAX_SAFE_INTEGER) {
+                    message.channel.send(useTooBigNumbersError());
+                }
+
                 else if(args.length !== 3) {
                     message.channel.send(numberOfParamError(2));
                 }
@@ -543,6 +645,10 @@ client.on(`message`, message => {
 
                 if(!Number.isNaN(baseSide) && !Number.isNaN(height) && args.length === 3 && baseSide < Number.MAX_SAFE_INTEGER && height < Number.MAX_SAFE_INTEGER) {
                     message.channel.send(result("A", "(" + baseSide + " * 4 * racine carrée de ((" + height + " * " + height + ") + (" + baseSide + " / 2) * (" + baseSide + " / 2)) / 2", squareBasedPyramidArea(baseSide, height)));
+                }
+
+                else if(baseSide > Number.MAX_SAFE_INTEGER || height > Number.MAX_SAFE_INTEGER) {
+                    message.channel.send(useTooBigNumbersError());
                 }
 
                 else if(args.length !== 3) {
@@ -561,6 +667,10 @@ client.on(`message`, message => {
                     message.channel.send(result("V", arete + " * " + arete + " * " + arete, cubeVolume(arete)));
                 }
 
+                else if(arete > Number.MAX_SAFE_INTEGER) {
+                    message.channel.send(useTooBigNumbersError());
+                }
+
                 else if(args.length !== 2) {
                     message.channel.send(numberOfParamError(1));
                 }
@@ -575,6 +685,10 @@ client.on(`message`, message => {
 
                 if(!Number.isNaN(length) && !Number.isNaN(width) && !Number.isNaN(height) && args.length === 4 && length < Number.MAX_SAFE_INTEGER && width < Number.MAX_SAFE_INTEGER && height < Number.MAX_SAFE_INTEGER) {
                     message.channel.send(result("V", length + " * " + width + " * " + height, rectangleCuboidVolume(length, width, height)));
+                }
+
+                else if(length > Number.MAX_SAFE_INTEGER || width > Number.MAX_SAFE_INTEGER || height > Number.MAX_SAFE_INTEGER) {
+                    message.channel.send(useTooBigNumbersError());
                 }
 
                 else if(args.length !== 4) {
@@ -592,6 +706,10 @@ client.on(`message`, message => {
                     message.channel.send(result("V", "pi * (" + radius + " * " + radius + ") * " + height, cylinderVolume(radius, height)));
                 }
 
+                else if(radius > Number.MAX_SAFE_INTEGER || height > Number.MAX_SAFE_INTEGER) {
+                    message.channel.send(useTooBigNumbersError());
+                }
+
                 else if(args.length !== 3) {
                     message.channel.send(numberOfParamError(2));
                 }
@@ -607,6 +725,10 @@ client.on(`message`, message => {
                     message.channel.send(result("V", "pi * (" + radius + " * " + radius + ") * " + height + " / 3", coneVolume(radius, height)));
                 }
 
+                else if(radius > Number.MAX_SAFE_INTEGER || height > Number.MAX_SAFE_INTEGER) {
+                    message.channel.send(useTooBigNumbersError());
+                }
+
                 else if(args.length !== 3) {
                     message.channel.send(numberOfParamError(2));
                 }
@@ -620,6 +742,10 @@ client.on(`message`, message => {
 
                 if(!Number.isNaN(side) && !Number.isNaN(height) &&  args.length === 3 && side < Number.MAX_SAFE_INTEGER && height < Number.MAX_SAFE_INTEGER) {
                     message.channel.send(result("V", "(" + side + " * " + side + ") * " + height + " / 3", squareBasedPyramidVolume(side, height)));
+                }
+
+                else if(side > Number.MAX_SAFE_INTEGER || height > Number.MAX_SAFE_INTEGER) {
+                    message.channel.send(useTooBigNumbersError());
                 }
 
                 else if(args.length !== 3) {
@@ -638,6 +764,10 @@ client.on(`message`, message => {
                     message.channel.send(result("V", "(" + length + " * " + width + ") * " + height + " / 3", rectangleBasedPyramidVolume(side, height)));
                 }
 
+                else if(length > Number.MAX_SAFE_INTEGER || width > Number.MAX_SAFE_INTEGER || height > Number.MAX_SAFE_INTEGER) {
+                    message.channel.send(useTooBigNumbersError());
+                }
+
                 else if(args.length !== 4) {
                     message.channel.send(numberOfParamError(3));
                 }
@@ -650,6 +780,10 @@ client.on(`message`, message => {
 
                 if(!Number.isNaN(radius) && args.length === 2 && radius < Number.MAX_SAFE_INTEGER) {
                     message.channel.send(result("V", "(4 / 3) * pi * (" + radius + " * " + radius + " * " + radius + ")", sphereVolume(radius)));
+                }
+
+                else if(radius > Number.MAX_SAFE_INTEGER) {
+                    message.channel.send(useTooBigNumbersError());
                 }
 
                 else if(args.length !== 2) {
@@ -669,6 +803,10 @@ client.on(`message`, message => {
                     message.channel.send(result("Théorème de Pythagore", "racine carrée de (" + hypotenuse + " * " + hypotenuse + ") - (" + knownSide + " * " + knownSide + ")", pythagoreOtherSide(hypotenuse, knownSide)));
                 }
 
+                else if(hypotenuse > Number.MAX_SAFE_INTEGER || knownSide > Number.MAX_SAFE_INTEGER) {
+                    message.channel.send(useTooBigNumbersError());
+                }
+
                 else if(args.length !== 3) {
                     message.channel.send(numberOfParamError(2));
                 }
@@ -681,7 +819,11 @@ client.on(`message`, message => {
                 let knownSide2 = parseFloat(args[2]);
 
                 if(!Number.isNaN(knownSide1) && !Number.isNaN(knownSide2) && args.length === 3 && knownSide1 < Number.MAX_SAFE_INTEGER && knownSide2 < Number.MAX_SAFE_INTEGER) {
-                    message.channel.send(result("Théorème de Pythagore", "racine carrée de (" + knownSide1 + " * " + knownSide1 + ") + (" + knownSide2 + " * " + knownSide2 + ")", Math.round((Math.hypot(knownSide1, knownSide2) * 1000)) / 1000;
+                    message.channel.send(result("Théorème de Pythagore", "racine carrée de (" + knownSide1 + " * " + knownSide1 + ") + (" + knownSide2 + " * " + knownSide2 + ")", Math.round((Math.hypot(knownSide1, knownSide2) * 1000)) / 1000));
+                }
+
+                else if(knownSide1 > Number.MAX_SAFE_INTEGER || knownSide2 > Number.MAX_SAFE_INTEGER) {
+                    message.channel.send(useTooBigNumbersError());
                 }
 
                 else if(args.length !== 3) {
@@ -700,6 +842,10 @@ client.on(`message`, message => {
                     message.channel.send(result("Théorème de Thalès", "(" + knownFractionNumerator + " * " + knownDenominator + ") / " + knownFractionDenominator, thalesWithUnknownNumerator(knownFractionNumerator, knownFractionDenominator, knownDenominator)));
                 }
 
+                else if(knownFractionNumerator > Number.MAX_SAFE_INTEGER || knownFractionDenominator > Number.MAX_SAFE_INTEGER || knownDenominator > Number.MAX_SAFE_INTEGER) {
+                    message.channel.send(useTooBigNumbersError());
+                }
+
                 else if(args.length !== 4) {
                     message.channel.send(numberOfParamError(3));
                 }
@@ -714,6 +860,10 @@ client.on(`message`, message => {
 
                 if(!Number.isNaN(knownFractionNumerator) && !Number.isNaN(knownFractionDenominator) && !Number.isNaN(knownNumerator) && args.length === 4 && knownFractionNumerator < Number.MAX_SAFE_INTEGER && knownFractionDenominator < Number.MAX_SAFE_INTEGER && knownNumerator < Number.MAX_SAFE_INTEGER) {
                     message.channel.send(result("Théorème de Thalès", "(" + knownFractionDenominator + " * " + knownNumerator + ") / " + knownFractionNumerator, thalesWithUnknownDenominator(knownFractionNumerator, knownFractionDenominator, knownNumerator)));
+                }
+
+                else if(knownFractionNumerator > Number.MAX_SAFE_INTEGER || knownFractionDenominator > Number.MAX_SAFE_INTEGER || knownNumerator > Number.MAX_SAFE_INTEGER) {
+                    message.channel.send(useTooBigNumbersError());
                 }
 
                 else if(args.length !== 4) {
