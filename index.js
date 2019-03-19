@@ -3,14 +3,6 @@ const client = new discord.Client();
 
 const prefix = '$';
 const pi = Math.PI;
-const tau = pi * 2;
-
-function countDecimals(value) {
-    if(Math.floor(value) !== value) {
-        return value.toString().split(".")[1].length || 0;
-    }
-    return 0;
-}
 
 function add(a, b) {
     return Math.round((a + b) * 1000) / 1000;
