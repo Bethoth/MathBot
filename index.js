@@ -197,6 +197,20 @@ function result(calculation, explanation, result, unit = "") {
     return embed;
 }
 
+function help() {
+    let embed = new discord.RichEmbed();
+    embed.setTitle(`**Aide**`);
+    embed.setColor("00FFFF");
+    embed.setDescription(`Liste des commandes: 
+    \`calc\`
+    \`perimeter\`
+    \`area\`
+    \`volume\`
+    \`theorem\`
+    `);
+    return embed;
+}
+
 client.on(`ready`, () => {
     console.log(`I'm ready !`);
 });
@@ -902,6 +916,12 @@ client.on(`message`, message => {
                 }
 
                 else message.channel.send(typeOfParamError("nombres"));
+            }
+        }
+
+        else if(command === "help") {
+            if(!args || args.length === 0) {
+                message.channel.send(help());
             }
         }
     }
