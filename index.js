@@ -22,10 +22,10 @@ calcHelp.setDescription(`**RAPPEL**: les [arguments] sont _obligatoires_ tandis 
 calcHelp.addField("À quoi ça sert ?", "Cette commande sert à faire les calculs les plus basiques comme les additions, les soustractions, les multiplications, les divisions et les modulos.");
 calcHelp.addField("Comment on s'en sert ?", `Cette commande s'utilise ainsi : \`$calc [nombre] [opérateur] [nombre]\``);
 calcHelp.addField("Exemples:", `
-\`$calc 7 + 7\` --> addition --> 14
-\`$calc 7 - 5\` --> soustraction --> 2
-\`$calc 7 * 5\` --> multiplication --> 35
-\`$calc 10 / 5\` --> division --> 2
+\`$calc 7 + 7\` 🡒 addition 🡒 14
+\`$calc 7 - 5\` 🡒 soustraction 🡒 2
+\`$calc 7 * 5\` 🡒 multiplication 🡒 35
+\`$calc 10 / 5\` 🡒 division 🡒 2
 `);
 calcHelp.addField("Alias:", "compute");
 
@@ -34,13 +34,12 @@ perimeterHelp.setTitle(`Aide de la commande \`perimeter\``);
 perimeterHelp.setColor("00FFFF");
 perimeterHelp.setDescription(`**RAPPEL**: les [arguments] sont _obligatoires_ tandis que les <arguments> ne le sont pas.`);
 perimeterHelp.addField("À quoi ça sert ?", "Cette commande sert à calculer le périmètre de nombreuses figures (\`$perimeterShapesList\`)");
-perimeterHelp.addField("Comment on s'en sert ?", `
-(soit \`n\` le nombre de mesures)
+perimeterHelp.addField("Comment on s'en sert ? (soit n le nombre de mesures)", `
 Cette commande s'utilise ainsi : \`$perimeter [figure] n[mesure]\`
 `);
 perimeterHelp.addField("Exemples:", `
-\`$perimeter square 5\` --> périmètre d'un carré --> 20
-\`$perimeter rectangle 8 6\` --> périmètre d'un rectangle --> 28
+\`$perimeter square 5\` 🡒 périmètre d'un carré 🡒 20
+\`$perimeter rectangle 8 6\` 🡒 périmètre d'un rectangle 🡒 28
 `);
 perimeterHelp.addField("Alias:", "p");
 
@@ -49,10 +48,10 @@ areaHelp.setTitle(`Aide de la commande \`area\``);
 areaHelp.setColor("00FFFF");
 areaHelp.setDescription(`**RAPPEL**: les [arguments] sont _obligatoires_ tandis que les <arguments> ne le sont pas.`);
 areaHelp.addField("À quoi ça sert ?", "Cette commande sert à calculer l'aire de nombreuses figures (\`$areaShapesList\`)");
-areaHelp.addField("Comment on s'en sert ?", `Cette commande s'utilise ainsi : \`$area [figure] [mesure] <mesure> <mesure>...\``);
+areaHelp.addField("Comment on s'en sert ? (soit n le nombre de mesures)", `Cette commande s'utilise ainsi : \`$area [figure] n[mesure]\``);
 areaHelp.addField("Exemples:", `
-\`$area square 5\` --> périmètre d'un carré --> 25
-\`$area rectangle 8 6\` --> périmètre d'un rectangle --> 48
+\`$area square 5\` 🡒 aire d'un carré 🡒 25
+\`$area rectangle 8 6\` 🡒 aire d'un rectangle 🡒 48
 `);
 areaHelp.addField("Alias:", "a");
 
@@ -61,10 +60,10 @@ volumeHelp.setTitle(`Aide de la commande \`volume\``);
 volumeHelp.setColor("00FFFF");
 volumeHelp.setDescription(`**RAPPEL**: les [arguments] sont _obligatoires_ tandis que les <arguments> ne le sont pas.`);
 volumeHelp.addField("À quoi ça sert ?", "Cette commande sert à calculer le volume de nombreuses figures (\`$volumeShapesList\`)");
-volumeHelp.addField("Comment on s'en sert ?", `Cette commande s'utilise ainsi : \`$volume [figure] [mesure] <mesure> <mesure>...\``);
+volumeHelp.addField("Comment on s'en sert ? (soit n le nombre de mesures)", `Cette commande s'utilise ainsi : \`$volume [figure] n[mesure]\``);
 volumeHelp.addField("Exemples:", `
-\`$volume cube 5\` --> volume d'un carré --> 125
-\`$perimeter rectangleCuboid 8 6 5\` --> volume d'un rectangle --> 240
+\`$volume cube 5\` 🡒 volume d'un carré 🡒 125
+\`$volume rectangleCuboid 8 6 5\` 🡒 volume d'un rectangle 🡒 240
 `);
 volumeHelp.addField("Alias:", "v");
 
@@ -73,16 +72,16 @@ theoremHelp.setTitle(`Aide de la commande \`theorem\``);
 theoremHelp.setColor("00FFFF");
 theoremHelp.setDescription(`**RAPPEL**: les [arguments] sont _obligatoires_ tandis que les <arguments> ne le sont pas.`);
 theoremHelp.addField("À quoi ça sert ?", "Cette commande sert à effectuer quelques théorèmes (\`$theoremsList\`)");
-theoremHelp.addField("Comment on s'en sert ?", `Cette commande s'utilise ainsi : \`$theorem [théorème] [mesure] <mesure> <mesure>...\``);
+theoremHelp.addField("Comment on s'en sert ? (soit n le nombre de mesures)", `Cette commande s'utilise ainsi : \`$theorem [théorème] n[mesure]\``);
 theoremHelp.addField("Exemples:", `
-\`$theorem pythagoreHypotenuse 5 5\` --> calcul d'hypoténuse --> 7 (environ)
-\`$perimeter rectangle 8 6\` --> périmètre d'un rectangle --> 28
+\`$theorem pythagoreHypotenuse 5 5\` 🡒 calcul d'hypoténuse 🡒 7 (environ)
+\`$theorem pythagoreOtherSide 8 6\` 🡒 calcul d'un autre côté 🡒 5 (environ)
 `);
-theoremHelp.addField("Alias:", "p");
+theoremHelp.addField("Alias:", "t");
 
 let perimeterShapesList = new discord.RichEmbed();
 perimeterShapesList.setTitle("Liste des figures dont le périmètre peut être calculé");
-perimeterShapesList.setColor("A0A0A0");
+perimeterShapesList.setColor("D2691E");
 perimeterShapesList.setDescription(`Les figures dont le périmètre peut être calculé sont : 
 carré (\`square\`)
 rectangle (\`rectangle\`)
@@ -1020,7 +1019,7 @@ client.on(`message`, message => {
             }
         }
 
-        else if(command === "perimeterShapesList") {
+        else if(command === "psl") {
             if(!args || args.length === 0) {
                 message.channel.send(perimeterShapesList);
             }
