@@ -33,7 +33,7 @@ let perimeterHelp = new discord.RichEmbed();
 perimeterHelp.setTitle(`Aide de la commande \`perimeter\``);
 perimeterHelp.setColor("00FFFF");
 perimeterHelp.setDescription(`**RAPPEL**: les [arguments] sont _obligatoires_ tandis que les <arguments> ne le sont pas.`);
-perimeterHelp.addField("À quoi ça sert ?", "Cette commande sert à calculer le périmètre de nombreuses figures (\`$perimeterShapesList\`)");
+perimeterHelp.addField("À quoi ça sert ?", "Cette commande sert à calculer le périmètre de nombreuses figures (\`$psl\`)");
 perimeterHelp.addField("Comment on s'en sert ? (soit n le nombre de mesures)", `
 Cette commande s'utilise ainsi : \`$perimeter [figure] n[mesure]\`
 `);
@@ -47,7 +47,7 @@ let areaHelp = new discord.RichEmbed();
 areaHelp.setTitle(`Aide de la commande \`area\``);
 areaHelp.setColor("00FFFF");
 areaHelp.setDescription(`**RAPPEL**: les [arguments] sont _obligatoires_ tandis que les <arguments> ne le sont pas.`);
-areaHelp.addField("À quoi ça sert ?", "Cette commande sert à calculer l'aire de nombreuses figures (\`$areaShapesList\`)");
+areaHelp.addField("À quoi ça sert ?", "Cette commande sert à calculer l'aire de nombreuses figures (\`$asl\`)");
 areaHelp.addField("Comment on s'en sert ? (soit n le nombre de mesures)", `Cette commande s'utilise ainsi : \`$area [figure] n[mesure]\``);
 areaHelp.addField("Exemples:", `
 \`$area square 5\` 🡒 aire d'un carré 🡒 25
@@ -59,7 +59,7 @@ let volumeHelp = new discord.RichEmbed();
 volumeHelp.setTitle(`Aide de la commande \`volume\``);
 volumeHelp.setColor("00FFFF");
 volumeHelp.setDescription(`**RAPPEL**: les [arguments] sont _obligatoires_ tandis que les <arguments> ne le sont pas.`);
-volumeHelp.addField("À quoi ça sert ?", "Cette commande sert à calculer le volume de nombreuses figures (\`$volumeShapesList\`)");
+volumeHelp.addField("À quoi ça sert ?", "Cette commande sert à calculer le volume de nombreuses figures (\`$vsl\`)");
 volumeHelp.addField("Comment on s'en sert ? (soit n le nombre de mesures)", `Cette commande s'utilise ainsi : \`$volume [figure] n[mesure]\``);
 volumeHelp.addField("Exemples:", `
 \`$volume cube 5\` 🡒 volume d'un carré 🡒 125
@@ -79,10 +79,10 @@ theoremHelp.addField("Exemples:", `
 `);
 theoremHelp.addField("Alias:", "t");
 
-let perimeterShapesList = new discord.RichEmbed();
-perimeterShapesList.setTitle("Liste des figures dont le périmètre peut être calculé");
-perimeterShapesList.setColor("D2691E");
-perimeterShapesList.setDescription(`Les figures dont le périmètre peut être calculé sont : 
+let psl = new discord.RichEmbed();
+psl.setTitle("Liste des figures dont le périmètre peut être calculé");
+psl.setColor("D2691E");
+psl.setDescription(`Les figures dont le périmètre peut être calculé sont : 
 carré (\`square\`)
 rectangle (\`rectangle\`)
 cercle (\`circle\`)
@@ -90,6 +90,38 @@ triangle (\`triangle\`)
 parallèlogramme (\`parallelogram\`)
 trapèze (\`trapeze\`)
 losange (\`diamond\`)
+`);
+
+let asl = new discord.RichEmbed();
+asl.setTitle("Liste des figures dont l'aire peut être calculée");
+asl.setColor("D2691E");
+asl.setDescription(`Les figures dont l'aire peut être calculée sont :
+carré (\`square\`)
+rectangle (\`rectangle\`)
+disque (\`disk\`)
+parallèlogramme (\`parallelogram\`)
+triangle (\`triangle\`)
+trapèze (\`trapeze\`)
+losange (\`diamond\`)
+sphère (\`sphere\`)
+cône (\`cone\`)
+cube (\`cube\`)
+pavé droit (\`r_c\`)
+cylindre (\`cylinder\`)
+pyramide à base carrée (\`pyramid_s\`)
+`);
+
+let vsl = new discord.RichEmbed();
+vsl.setTitle("Liste des figures dont le volume peut être calculé");
+vsl.setColor("D2691E");
+vsl.setDescription(`Les figures dont le volume peut être calculé sont :
+cube (\`cube\`)
+pavé droit (\`r_c\`)
+cylindre (\`cylinder\`)
+cône (\`cone\`)
+pyramide à base carrée (\`pyramid_s\`)
+pyramide à base rectangle (\`pyramid_r\`)
+sphère (\`sphere\`)
 `);
 
 function add(a, b) {
@@ -1021,8 +1053,21 @@ client.on(`message`, message => {
 
         else if(command === "psl") {
             if(!args || args.length === 0) {
-                message.channel.send(perimeterShapesList);
+                message.channel.send(psl);
+            }
+        }
+
+        else if(command === "asl") {
+            if(!args || args.length === 0) {
+                message.channel.send(asl);
+            }
+        }
+
+        else if(command === "vsl") {
+            if(!args || args.length === 0) {
+                message.channel.send(vsl);
             }
         }
     }
 });
+
