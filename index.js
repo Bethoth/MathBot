@@ -4,9 +4,20 @@ const client = new discord.Client();
 const prefix = '$';
 const pi = Math.PI;
 
+let help = new discord.RichEmbed();
+help.setTitle(`Aide`);
+help.setColor("00FFFF");
+help.setDescription(`Liste des commandes: 
+\`calc\`
+\`perimeter\`
+\`area\`
+\`volume\`
+\`theorem\`
+`);
+
 let calcHelp = new discord.RichEmbed();
 calcHelp.setColor("00FFFF");
-calcHelp.setTitle(`**Aide** de la commande \`calc\``);
+calcHelp.setTitle(`Aide de la commande \`calc\``);
 calcHelp.setDescription(`**RAPPEL**: les [arguments] sont _obligatoires_ tandis que les <arguments> ne le sont pas.`);
 calcHelp.addField("À quoi ça sert ?", "Cette commande sert à faire les calculs les plus basiques comme les additions, les soustractions, les multiplications, les divisions et les modulos.");
 calcHelp.addField("Comment on s'en sert ?", `Cette commande s'utilise ainsi : \`$calc [nombre] [opérateur] [nombre]\``);
@@ -19,11 +30,14 @@ calcHelp.addField("Exemples:", `
 calcHelp.addField("Alias:", "compute");
 
 let perimeterHelp = new discord.RichEmbed();
-perimeterHelp.setTitle(`**Aide** de la commande \`perimeter\``);
+perimeterHelp.setTitle(`Aide de la commande \`perimeter\``);
 perimeterHelp.setColor("00FFFF");
 perimeterHelp.setDescription(`**RAPPEL**: les [arguments] sont _obligatoires_ tandis que les <arguments> ne le sont pas.`);
 perimeterHelp.addField("À quoi ça sert ?", "Cette commande sert à calculer le périmètre de nombreuses figures (\`$perimeterShapesList\`)");
-perimeterHelp.addField("Comment on s'en sert ?", `Cette commande s'utilise ainsi : \`$perimeter [figure] [mesure] <mesure> <mesure>...\``);
+perimeterHelp.addField("Comment on s'en sert ?", `
+(soit \`n\` le nombre de mesures)
+Cette commande s'utilise ainsi : \`$perimeter [figure] n[mesure]\`
+`);
 perimeterHelp.addField("Exemples:", `
 \`$perimeter square 5\` --> périmètre d'un carré --> 20
 \`$perimeter rectangle 8 6\` --> périmètre d'un rectangle --> 28
@@ -31,7 +45,7 @@ perimeterHelp.addField("Exemples:", `
 perimeterHelp.addField("Alias:", "p");
 
 let areaHelp = new discord.RichEmbed();
-areaHelp.setTitle(`**Aide** de la commande \`area\``);
+areaHelp.setTitle(`Aide de la commande \`area\``);
 areaHelp.setColor("00FFFF");
 areaHelp.setDescription(`**RAPPEL**: les [arguments] sont _obligatoires_ tandis que les <arguments> ne le sont pas.`);
 areaHelp.addField("À quoi ça sert ?", "Cette commande sert à calculer l'aire de nombreuses figures (\`$areaShapesList\`)");
@@ -43,28 +57,41 @@ areaHelp.addField("Exemples:", `
 areaHelp.addField("Alias:", "a");
 
 let volumeHelp = new discord.RichEmbed();
-volumeHelp.setTitle(`**Aide** de la commande \`volume\``);
+volumeHelp.setTitle(`Aide de la commande \`volume\``);
 volumeHelp.setColor("00FFFF");
 volumeHelp.setDescription(`**RAPPEL**: les [arguments] sont _obligatoires_ tandis que les <arguments> ne le sont pas.`);
 volumeHelp.addField("À quoi ça sert ?", "Cette commande sert à calculer le volume de nombreuses figures (\`$volumeShapesList\`)");
 volumeHelp.addField("Comment on s'en sert ?", `Cette commande s'utilise ainsi : \`$volume [figure] [mesure] <mesure> <mesure>...\``);
 volumeHelp.addField("Exemples:", `
-\`$volume cube 5\` --> périmètre d'un carré --> 125
-\`$perimeter rectangleCuboid 8 6 5\` --> périmètre d'un rectangle --> 240
+\`$volume cube 5\` --> volume d'un carré --> 125
+\`$perimeter rectangleCuboid 8 6 5\` --> volume d'un rectangle --> 240
 `);
 volumeHelp.addField("Alias:", "v");
 
 let theoremHelp = new discord.RichEmbed();
-theoremHelp.setTitle(`**Aide** de la commande \`theorem\``);
+theoremHelp.setTitle(`Aide de la commande \`theorem\``);
 theoremHelp.setColor("00FFFF");
 theoremHelp.setDescription(`**RAPPEL**: les [arguments] sont _obligatoires_ tandis que les <arguments> ne le sont pas.`);
 theoremHelp.addField("À quoi ça sert ?", "Cette commande sert à effectuer quelques théorèmes (\`$theoremsList\`)");
 theoremHelp.addField("Comment on s'en sert ?", `Cette commande s'utilise ainsi : \`$theorem [théorème] [mesure] <mesure> <mesure>...\``);
 theoremHelp.addField("Exemples:", `
-\`$theorem square 5\` --> périmètre d'un carré --> 20
+\`$theorem pythagoreHypotenuse 5 5\` --> calcul d'hypoténuse --> 7 (environ)
 \`$perimeter rectangle 8 6\` --> périmètre d'un rectangle --> 28
 `);
 theoremHelp.addField("Alias:", "p");
+
+let perimeterShapesList = new discord.RichEmbed();
+perimeterShapesList.setTitle("Liste des figures dont le périmètre peut être calculé");
+perimeterShapesList.setColor("A0A0A0");
+perimeterShapesList.setDescription(`Les figures dont le périmètre peut être calculé sont : 
+carré (\`square\`)
+rectangle (\`rectangle\`)
+cercle (\`circle\`)
+triangle (\`triangle\`)
+parallèlogramme (\`parallelogram\`)
+trapèze (\`trapeze\`)
+losange (\`diamond\`)
+`);
 
 function add(a, b) {
     return Math.round((a + b) * 1000) / 1000;
@@ -211,7 +238,7 @@ function thalesWithUnknownDenominator(knownFractionNumerator, knownFractionDenom
 
 function numberOfParamError(expectedNumber) {
     let embed = new discord.RichEmbed();
-    embed.setTitle(`**Erreur**: nombre de paramètres`);
+    embed.setTitle(`Erreur: nombre de paramètres`);
     embed.setDescription(`:x: Cette commande nécessite ` + expectedNumber + ` paramètres.`);
     embed.setColor(`FF0000`);
     return embed;
@@ -219,7 +246,7 @@ function numberOfParamError(expectedNumber) {
 
 function typeOfParamError(expectedType) {
     let embed = new discord.RichEmbed();
-    embed.setTitle(`**Erreur**: types des paramètres`);
+    embed.setTitle(`Erreur: types des paramètres`);
     embed.setColor("FF0000");
     embed.setDescription(`:x: Veuillez n'utiliser que des ` + expectedType);
     return embed;
@@ -227,7 +254,7 @@ function typeOfParamError(expectedType) {
 
 function useTooBigNumbersError() {
     let embed = new discord.RichEmbed();
-    embed.setTitle(`**Erreur**: Utilisation de nombres trop grands`);
+    embed.setTitle(`Erreur: Utilisation de nombres trop grands`);
     embed.setColor("FF0000");
     embed.setDescription(`:x: Vous utilisez un nombre trop grand, la limite est de ` + Number.MAX_SAFE_INTEGER);
     return embed;
@@ -235,7 +262,7 @@ function useTooBigNumbersError() {
 
 function byZeroDivisionError() {
     let embed = new discord.RichEmbed();
-    embed.setTitle(`**Erreur**: Division par 0`);
+    embed.setTitle(`Erreur: Division par 0`);
     embed.setColor("FF0000");
     embed.setDescription(`:x: Vous ne pouvez pas effectuer de division par 0.`);
     return embed;
@@ -243,7 +270,7 @@ function byZeroDivisionError() {
 
 function result(calculation, explanation, result, unit = "") {
     let embed = new discord.RichEmbed();
-    embed.setTitle(`**Résultat**:`);
+    embed.setTitle(`Résultat:`);
     embed.setColor("10DA5A");
     if(result < Number.MAX_SAFE_INTEGER) {
         embed.setDescription(calculation + " = " + explanation + " = " + result + unit);
@@ -251,25 +278,11 @@ function result(calculation, explanation, result, unit = "") {
 
     else if(result >= Number.MAX_SAFE_INTEGER) {
         let embed = new discord.RichEmbed();
-        embed.setTitle(`**Erreur**: Résultat trop grand`);
+        embed.setTitle(`Erreur: Résultat trop grand`);
         embed.setColor("FF0000");
         embed.setDescription(`:x: Le résultat de votre calcul est trop élevé pour être affiché correctement.`);
         return embed;
     }
-    return embed;
-}
-
-function help() {
-    let embed = new discord.RichEmbed();
-    embed.setTitle(`**Aide**`);
-    embed.setColor("00FFFF");
-    embed.setDescription(`Liste des commandes: 
-    \`calc\`
-    \`perimeter\`
-    \`area\`
-    \`volume\`
-    \`theorem\`
-    `);
     return embed;
 }
 
@@ -364,7 +377,7 @@ client.on(`message`, message => {
             }
         }
 
-        else if(command === "p") {
+        else if(command === "p" || command === "perimeter") {
             if(args[0] === "square") {
                 let side = parseFloat(args[1]);
 
@@ -499,7 +512,7 @@ client.on(`message`, message => {
             }
         }
 
-        else if(command === "a") {
+        else if(command === "a" || command === "area") {
             if(args[0] === "square") {
                 let side = parseFloat(args[1]);
 
@@ -746,7 +759,7 @@ client.on(`message`, message => {
             }
         }
 
-        else if(command === "v") {
+        else if(command === "v" || command === "volume") {
             if(args[0] === "cube") {
                 let arete = parseFloat(args[1]);
 
@@ -881,7 +894,7 @@ client.on(`message`, message => {
             }
         }
 
-        else if(command === "t") {
+        else if(command === "t" || command === "theorem") {
             if(args[0] === "pythagoreOtherSide") {
                 let hypotenuse = parseFloat(args[1]);
                 let knownSide = parseFloat(args[2]);
@@ -983,7 +996,33 @@ client.on(`message`, message => {
 
         else if(command === "help") {
             if(!args || args.length === 0) {
-                message.channel.send(help());
+                message.channel.send(help);
+            }
+
+            else if(args[0] === "calc") {
+                message.channel.send(calcHelp);
+            }
+
+            else if(args[0] === "perimeter") {
+                message.channel.send(perimeterHelp);
+            }
+
+            else if(args[0] === "area") {
+                message.channel.send(areaHelp);
+            }
+
+            else if(args[0] === "volume") {
+                message.channel.send(volumeHelp);
+            }
+
+            else if(args[0] === "theorem") {
+                message.channel.send(theoremHelp);
+            }
+        }
+
+        else if(command === "perimeterShapesList") {
+            if(!args || args.length === 0) {
+                message.channel.send(perimeterShapesList);
             }
         }
     }
