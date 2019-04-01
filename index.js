@@ -22,24 +22,24 @@ calcHelp.setDescription(`**RAPPEL**: les [arguments] sont _obligatoires_ tandis 
 calcHelp.addField("À quoi ça sert ?", "Cette commande sert à faire les calculs les plus basiques comme les additions, les soustractions, les multiplications, les divisions et les modulos.");
 calcHelp.addField("Comment on s'en sert ?", `Cette commande s'utilise ainsi : \`$calc [nombre] [opérateur] [nombre]\``);
 calcHelp.addField("Exemples:", `
-\`$calc 7 + 7\` 🡒 addition 🡒 14
-\`$calc 7 - 5\` 🡒 soustraction 🡒 2
-\`$calc 7 * 5\` 🡒 multiplication 🡒 35
-\`$calc 10 / 5\` 🡒 division 🡒 2
+\`$calc 7 + 7\` → addition → 14
+\`$calc 7 - 5\` → soustraction → 2
+\`$calc 7 * 5\` → multiplication → 35
+\`$calc 10 / 5\` → division → 2
 `);
-calcHelp.addField("Alias:", "compute");
+calcHelp.addField("Alias:", "compute, c");
 
 let perimeterHelp = new discord.RichEmbed();
 perimeterHelp.setTitle(`Aide de la commande \`perimeter\``);
 perimeterHelp.setColor("00FFFF");
 perimeterHelp.setDescription(`**RAPPEL**: les [arguments] sont _obligatoires_ tandis que les <arguments> ne le sont pas.`);
-perimeterHelp.addField("À quoi ça sert ?", "Cette commande sert à calculer le périmètre de nombreuses figures (\`$psl\`)");
+perimeterHelp.addField("À quoi ça sert ?", "Cette commande sert à calculer le périmètre de nombreuses figures (\`$pl\`)");
 perimeterHelp.addField("Comment on s'en sert ? (soit n le nombre de mesures)", `
 Cette commande s'utilise ainsi : \`$perimeter [figure] n[mesure]\`
 `);
 perimeterHelp.addField("Exemples:", `
-\`$perimeter square 5\` 🡒 périmètre d'un carré 🡒 20
-\`$perimeter rectangle 8 6\` 🡒 périmètre d'un rectangle 🡒 28
+\`$perimeter square 5\` → périmètre d'un carré → 20
+\`$perimeter rectangle 8 6\` → périmètre d'un rectangle → 28
 `);
 perimeterHelp.addField("Alias:", "p");
 
@@ -47,11 +47,11 @@ let areaHelp = new discord.RichEmbed();
 areaHelp.setTitle(`Aide de la commande \`area\``);
 areaHelp.setColor("00FFFF");
 areaHelp.setDescription(`**RAPPEL**: les [arguments] sont _obligatoires_ tandis que les <arguments> ne le sont pas.`);
-areaHelp.addField("À quoi ça sert ?", "Cette commande sert à calculer l'aire de nombreuses figures (\`$asl\`)");
+areaHelp.addField("À quoi ça sert ?", "Cette commande sert à calculer l'aire de nombreuses figures (\`$al\`)");
 areaHelp.addField("Comment on s'en sert ? (soit n le nombre de mesures)", `Cette commande s'utilise ainsi : \`$area [figure] n[mesure]\``);
 areaHelp.addField("Exemples:", `
-\`$area square 5\` 🡒 aire d'un carré 🡒 25
-\`$area rectangle 8 6\` 🡒 aire d'un rectangle 🡒 48
+\`$area square 5\` → aire d'un carré → 25
+\`$area rectangle 8 6\` → aire d'un rectangle → 48
 `);
 areaHelp.addField("Alias:", "a");
 
@@ -59,11 +59,11 @@ let volumeHelp = new discord.RichEmbed();
 volumeHelp.setTitle(`Aide de la commande \`volume\``);
 volumeHelp.setColor("00FFFF");
 volumeHelp.setDescription(`**RAPPEL**: les [arguments] sont _obligatoires_ tandis que les <arguments> ne le sont pas.`);
-volumeHelp.addField("À quoi ça sert ?", "Cette commande sert à calculer le volume de nombreuses figures (\`$vsl\`)");
+volumeHelp.addField("À quoi ça sert ?", "Cette commande sert à calculer le volume de nombreuses figures (\`$vl\`)");
 volumeHelp.addField("Comment on s'en sert ? (soit n le nombre de mesures)", `Cette commande s'utilise ainsi : \`$volume [figure] n[mesure]\``);
 volumeHelp.addField("Exemples:", `
-\`$volume cube 5\` 🡒 volume d'un carré 🡒 125
-\`$volume rectangleCuboid 8 6 5\` 🡒 volume d'un rectangle 🡒 240
+\`$volume cube 5\` → volume d'un carré → 125
+\`$volume rectangleCuboid 8 6 5\` → volume d'un rectangle → 240
 `);
 volumeHelp.addField("Alias:", "v");
 
@@ -74,15 +74,15 @@ theoremHelp.setDescription(`**RAPPEL**: les [arguments] sont _obligatoires_ tand
 theoremHelp.addField("À quoi ça sert ?", "Cette commande sert à effectuer quelques théorèmes (\`$theoremsList\`)");
 theoremHelp.addField("Comment on s'en sert ? (soit n le nombre de mesures)", `Cette commande s'utilise ainsi : \`$theorem [théorème] n[mesure]\``);
 theoremHelp.addField("Exemples:", `
-\`$theorem pythagoreHypotenuse 5 5\` 🡒 calcul d'hypoténuse 🡒 7 (environ)
-\`$theorem pythagoreOtherSide 8 6\` 🡒 calcul d'un autre côté 🡒 5 (environ)
+\`$theorem pythagoreHypotenuse 5 5\` → calcul d'hypoténuse → 7 (environ)
+\`$theorem pythagoreOtherSide 8 6\` → calcul d'un autre côté → 5 (environ)
 `);
 theoremHelp.addField("Alias:", "t");
 
-let psl = new discord.RichEmbed();
-psl.setTitle("Liste des figures dont le périmètre peut être calculé");
-psl.setColor("D2691E");
-psl.setDescription(`Les figures dont le périmètre peut être calculé sont : 
+let pl = new discord.RichEmbed(); //perimeter list
+pl.setTitle("Liste des figures dont le périmètre peut être calculé");
+pl.setColor("D2691E");
+pl.setDescription(`Les figures dont le périmètre peut être calculé sont : 
 carré (\`square\`)
 rectangle (\`rectangle\`)
 cercle (\`circle\`)
@@ -92,10 +92,10 @@ trapèze (\`trapeze\`)
 losange (\`diamond\`)
 `);
 
-let asl = new discord.RichEmbed();
-asl.setTitle("Liste des figures dont l'aire peut être calculée");
-asl.setColor("D2691E");
-asl.setDescription(`Les figures dont l'aire peut être calculée sont :
+let al = new discord.RichEmbed(); //area list
+al.setTitle("Liste des figures dont l'aire peut être calculée");
+al.setColor("D2691E");
+al.setDescription(`Les figures dont l'aire peut être calculée sont :
 carré (\`square\`)
 rectangle (\`rectangle\`)
 disque (\`disk\`)
@@ -111,10 +111,10 @@ cylindre (\`cylinder\`)
 pyramide à base carrée (\`pyramid_s\`)
 `);
 
-let vsl = new discord.RichEmbed();
-vsl.setTitle("Liste des figures dont le volume peut être calculé");
-vsl.setColor("D2691E");
-vsl.setDescription(`Les figures dont le volume peut être calculé sont :
+let vl = new discord.RichEmbed(); //volume list
+vl.setTitle("Liste des figures dont le volume peut être calculé");
+vl.setColor("D2691E");
+vl.setDescription(`Les figures dont le volume peut être calculé sont :
 cube (\`cube\`)
 pavé droit (\`r_c\`)
 cylindre (\`cylinder\`)
@@ -122,6 +122,15 @@ cône (\`cone\`)
 pyramide à base carrée (\`pyramid_s\`)
 pyramide à base rectangle (\`pyramid_r\`)
 sphère (\`sphere\`)
+`);
+
+let tl = new discord.RichEmbed(); //theorems list
+tl.setTitle("Liste des théorèmes applicables");
+tl.setColor("D2691E");
+tl.setDescription(`Les théorèmes applicables sont :
+le théorème de Pythagore (calcul d'hypoténuse (\`pythagoreHypotenuse\`) et calcul d'un autre côté (\`pythagoreOtherSide\`))
+le théorème de Thalès (calcul lorsque l'on connaît une fraction et un numérateur (\`thalesWithUnknownDenominator\`) **ou** un dénominateur (\`thalesWithUnknownNumerator\`))
+la réciproque du théorème de Pythagore (renvoie vrai si les 2 côtés au carré additionnés sont égaux au carré de l'autre côté (\`inverseOfPythagoreTheorem\`))
 `);
 
 function add(a, b) {
@@ -326,7 +335,7 @@ client.on(`message`, message => {
         const args = message.content.slice(prefix.length).trim().split(/ +/g);
         const command = args.shift().toLowerCase();
 
-        if(command === "calc") {
+        if(command === "calc" || command === "compute" || command === "c") {
             if(args[1] === '+') {
                 let a = parseFloat(args[0]);
                 let b = parseFloat(args[2]);
@@ -1051,23 +1060,22 @@ client.on(`message`, message => {
             }
         }
 
-        else if(command === "psl") {
+        else if(command === "pl" || command === "perimeterList") {
             if(!args || args.length === 0) {
-                message.channel.send(psl);
+                message.channel.send(pl);
             }
         }
 
-        else if(command === "asl") {
+        else if(command === "al" || command === "areaList") {
             if(!args || args.length === 0) {
-                message.channel.send(asl);
+                message.channel.send(al);
             }
         }
 
-        else if(command === "vsl") {
+        else if(command === "vl" || command === "volumeList") {
             if(!args || args.length === 0) {
-                message.channel.send(vsl);
+                message.channel.send(vl);
             }
         }
     }
 });
-
