@@ -87,7 +87,7 @@ carré (\`square\`)
 rectangle (\`rectangle\`)
 cercle (\`circle\`)
 triangle (\`triangle\`)
-parallèlogramme (\`parallelogram\`)
+parallèlogramme (\`parallelogram\` | \`para\`)
 trapèze (\`trapeze\`)
 losange (\`diamond\`)
 `);
@@ -99,14 +99,14 @@ al.setDescription(`Les figures dont l'aire peut être calculée sont :
 carré (\`square\`)
 rectangle (\`rectangle\`)
 disque (\`disk\`)
-parallèlogramme (\`parallelogram\`)
+parallèlogramme (\`parallelogram\` | \`para\`)
 triangle (\`triangle\`)
 trapèze (\`trapeze\`)
 losange (\`diamond\`)
 sphère (\`sphere\`)
 cône (\`cone\`)
 cube (\`cube\`)
-pavé droit (\`r_c\`)
+pavé droit (\`r_c\` | \`rectangleCuboid\`)
 cylindre (\`cylinder\`)
 pyramide à base carrée (\`pyramid_s\`)
 `);
@@ -116,7 +116,7 @@ vl.setTitle("Liste des figures dont le volume peut être calculé");
 vl.setColor("D2691E");
 vl.setDescription(`Les figures dont le volume peut être calculé sont :
 cube (\`cube\`)
-pavé droit (\`r_c\`)
+pavé droit (\`r_c\` | \`rectangleCuboid\`)
 cylindre (\`cylinder\`)
 cône (\`cone\`)
 pyramide à base carrée (\`pyramid_s\`)
@@ -493,7 +493,7 @@ client.on(`message`, message => {
                 else message.channel.send(typeOfParamError("nombres"));
             }
 
-            else if(args[0] === "parallelogram") {
+            else if(args[0] === "parallelogram" || args[0] === "para") {
                 let side1 = parseFloat(args[1]);
                 let side2 = parseFloat(args[2]);
 
@@ -608,7 +608,7 @@ client.on(`message`, message => {
                 else message.channel.send(typeOfParamError("nombres"));
             }
 
-            else if(args[0] === "parallelogram") {
+            else if(args[0] === "parallelogram" || args[0] === "para") {
                 let base = parseFloat(args[1]);
                 let height = parseFloat(args[2]);
 
@@ -740,7 +740,7 @@ client.on(`message`, message => {
                 else message.channel.send(typeOfParamError("nombres"));
             }
 
-            else if(args[0] === "r_c") {
+            else if(args[0] === "r_c" || args[0] === "rectangleCuboid") {
                 let length = parseFloat(args[1]);
                 let width = parseFloat(args[2]);
                 let height = parseFloat(args[3]);
@@ -818,7 +818,7 @@ client.on(`message`, message => {
                 else message.channel.send(typeOfParamError("nombres"));
             }
 
-            else if(args[0] === "r_c") {
+            else if(args[0] === "r_c" || args[0] === "rectangleCuboid") {
                 let length = parseFloat(args[1]);
                 let width = parseFloat(args[2]);
                 let height = parseFloat(args[3]);
@@ -935,7 +935,7 @@ client.on(`message`, message => {
         }
 
         else if(command === "t" || command === "theorem") {
-            if(args[0] === "pythagoreOtherSide") {
+            if(args[0] === "pythagoreOtherSide" || args[0] === "pOS") {
                 let hypotenuse = parseFloat(args[1]);
                 let knownSide = parseFloat(args[2]);
 
@@ -954,7 +954,7 @@ client.on(`message`, message => {
                 else message.channel.send(typeOfParamError("nombres"));
             }
             
-            else if(args[0] === "pythagoreHypotenuse") {
+            else if(args[0] === "pythagoreHypotenuse" || args[0] === "pH") {
                 let knownSide1 = parseFloat(args[1]);
                 let knownSide2 = parseFloat(args[2]);
 
@@ -973,7 +973,7 @@ client.on(`message`, message => {
                 else message.channel.send(typeOfParamError("nombres"));
             }
             
-            else if(args[0] === "thalesWithUnknownNumerator") {
+            else if(args[0] === "thalesWithUnknownNumerator" || args[0] === "tWUN") {
                 let knownFractionNumerator = parseFloat(args[1]);
                 let knownFractionDenominator = parseFloat(args[2]);
                 let knownDenominator = parseFloat(args[3]);
@@ -993,7 +993,7 @@ client.on(`message`, message => {
                 else message.channel.send(typeOfParamError("nombres"));
             }
             
-            else if(args[0] === "thalesWithUnknownDenominator") {
+            else if(args[0] === "thalesWithUnknownDenominator" || args[0] === "tWUD") {
                 let knownFractionNumerator = parseFloat(args[1]);
                 let knownFractionDenominator = parseFloat(args[2]);
                 let knownNumerator = parseFloat(args[3]);
@@ -1013,7 +1013,7 @@ client.on(`message`, message => {
                 else message.channel.send(typeOfParamError("nombres"));
             }
 
-            else if(args[0] === "inverseOfPythagoreTheorem") {
+            else if(args[0] === "inverseOfPythagoreTheorem" || args[0] === "iOPT") {
                 let referenceSide = parseFloat(args[1]);
                 let otherSide1 = parseFloat(args[2]);
                 let otherSide2 = parseFloat(args[3]);
@@ -1039,23 +1039,23 @@ client.on(`message`, message => {
                 message.channel.send(help);
             }
 
-            else if(args[0] === "calc") {
+            else if(args[0] === "calc" || "compute") {
                 message.channel.send(calcHelp);
             }
 
-            else if(args[0] === "perimeter") {
+            else if(args[0] === "perimeter" || args[0] === "p") {
                 message.channel.send(perimeterHelp);
             }
 
-            else if(args[0] === "area") {
+            else if(args[0] === "area" || args[0] === "a") {
                 message.channel.send(areaHelp);
             }
 
-            else if(args[0] === "volume") {
+            else if(args[0] === "volume" || args[0] === "v") {
                 message.channel.send(volumeHelp);
             }
 
-            else if(args[0] === "theorem") {
+            else if(args[0] === "theorem" || args[0] === "t") {
                 message.channel.send(theoremHelp);
             }
         }
