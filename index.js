@@ -128,9 +128,11 @@ let tl = new discord.RichEmbed(); //theorems list
 tl.setTitle("Liste des théorèmes applicables");
 tl.setColor("D2691E");
 tl.setDescription(`Les théorèmes applicables sont :
-le théorème de Pythagore (calcul d'hypoténuse (\`pythagoreHypotenuse\`) et calcul d'un autre côté (\`pythagoreOtherSide\`))
-le théorème de Thalès (calcul lorsque l'on connaît une fraction et un numérateur (\`thalesWithUnknownDenominator\`) **ou** un dénominateur (\`thalesWithUnknownNumerator\`))
-la réciproque du théorème de Pythagore (renvoie vrai si les 2 côtés au carré additionnés sont égaux au carré de l'autre côté (\`inverseOfPythagoreTheorem\`))
+le théorème de Pythagore (calcul d'hypoténuse (\`pythagoreHypotenuse\` | \`pH\`) et calcul d'un autre côté (\`pythagoreOtherSide\` | \`pOS\`))
+
+le théorème de Thalès (calcul lorsque l'on connaît une fraction et un numérateur (\`thalesWithUnknownDenominator\` | \`tWUD\`) **ou** un dénominateur (\`thalesWithUnknownNumerator\` | \`tWUN\`))
+
+la réciproque du théorème de Pythagore (renvoie vrai si les 2 côtés au carré additionnés sont égaux au carré de l'autre côté (\`inverseOfPythagoreTheorem\` | \`iOPT\`))
 `);
 
 function add(a, b) {
@@ -147,6 +149,10 @@ function multiply(a, b) {
 
 function divide(a, b) {
     return Math.round((a / b) * 1000) / 1000;
+}
+
+function modulo(a, b) {
+    return Math.round((a % b) * 1000) / 1000;
 }
 
 function squarePerimeter(side) {
@@ -408,6 +414,25 @@ client.on(`message`, message => {
 
                 else if(b === 0) {
                     message.channel.send(byZeroDivisionError());
+                }
+
+                else if(args.length !== 3) {
+                    message.channel.send(numberOfParamError(2));
+                }
+
+                else message.channel.send(typeOfParamError("nombres"));
+            }
+
+            else if(args[1] === '%') {
+                let a = Number(args[0]);
+                let b = Number(args[2]);
+
+                if(!Number.isNaN(a) && !Number.isNaN(b) && args.length === 3 && a < Number.MAX_SAFE_INTEGER && b < Number.MAX_SAFE_INTEGER) {
+                    message.channel.send(result("Modulo", a + " % " + b, modulo(a, b)));
+                }
+
+                else if(a > Number.MAX_SAFE_INTEGER || b > Number.MAX_SAFE_INTEGER) {
+                    message.channel.send(useTooBigNumbersError());
                 }
 
                 else if(args.length !== 3) {
@@ -1040,7 +1065,7 @@ client.on(`message`, message => {
                 message.channel.send(help);
             }
 
-            else if(args[0] === "calc" || "compute") {
+            else if(args[0] === "calc" || args[0] === "compute" || args[0] === "c") {
                 message.channel.send(calcHelp);
             }
 
@@ -1076,6 +1101,12 @@ client.on(`message`, message => {
         else if(command === "vl" || command === "volume_list") {
             if(!args || args.length === 0) {
                 message.channel.send(vl);
+            }
+        }
+
+        else if(command === "tl" || command === "theorems_list") {
+            if(!args || args.length === 0) {
+                message.channel.send(tl);
             }
         }
     }
