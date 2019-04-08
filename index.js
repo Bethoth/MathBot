@@ -328,6 +328,7 @@ function result(calculation, explanation, result, unit = "") {
 
 client.on(`ready`, () => {
     console.log(`I'm ready !`);
+    client.user.setActivity("prefix : $ | $help");
 });
 
 client.on(`message`, message => {
@@ -1019,7 +1020,7 @@ client.on(`message`, message => {
                 let otherSide2 = parseFloat(args[3]);
 
                 if(!Number.isNaN(referenceSide) && !Number.isNaN(otherSide1) && !Number.isNaN(otherSide2) && args.length === 4 && referenceSide < Number.MAX_SAFE_INTEGER && otherSide1 < Number.MAX_SAFE_INTEGER && otherSide2 < Number.MAX_SAFE_INTEGER) {
-                    message.channel.send(result("Réciproque du théorème de Thalès", referenceSide + "² = " + otherSide1 + "² + " + otherSide2 + "² ?", inverseOfPythagoreTheorem(referenceSide, otherSide1, otherSide2)));
+                    message.channel.send(result("Réciproque du théorème de Pythagore", referenceSide + "² = " + otherSide1 + "² + " + otherSide2 + "² ?", inverseOfPythagoreTheorem(referenceSide, otherSide1, otherSide2)));
                 }
 
                 else if(referenceSide > Number.MAX_SAFE_INTEGER || otherSide1 > Number.MAX_SAFE_INTEGER || otherSide2 > Number.MAX_SAFE_INTEGER) {
@@ -1060,19 +1061,19 @@ client.on(`message`, message => {
             }
         }
 
-        else if(command === "pl" || command === "perimeterList") {
+        else if(command === "pl" || command === "perimeter_list") {
             if(!args || args.length === 0) {
                 message.channel.send(pl);
             }
         }
 
-        else if(command === "al" || command === "areaList") {
+        else if(command === "al" || command === "area_list") {
             if(!args || args.length === 0) {
                 message.channel.send(al);
             }
         }
 
-        else if(command === "vl" || command === "volumeList") {
+        else if(command === "vl" || command === "volume_list") {
             if(!args || args.length === 0) {
                 message.channel.send(vl);
             }
