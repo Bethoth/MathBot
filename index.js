@@ -1,267 +1,14 @@
 const discord = require(`discord.js`);
 const client = new discord.Client();
 
+const embeds = require("./embeds");
+const calcFunctions = require("./calcFunctions");
+const perimeterFunctions = require("./perimeterFunctions");
+const areaFunctions = require("./areaFunctions");
+const volumeFunctions = require("./volumeFunctions");
+
 const prefix = '$';
 const pi = Math.PI;
-
-let help = new discord.RichEmbed();
-help.setTitle(`Aide`);
-help.setColor("00FFFF");
-help.setDescription(`Liste des commandes: 
-\`calc\`
-\`perimeter\`
-\`area\`
-\`volume\`
-\`theorem\`
-`);
-
-let calcHelp = new discord.RichEmbed();
-calcHelp.setColor("00FFFF");
-calcHelp.setTitle(`Aide de la commande \`calc\``);
-calcHelp.setDescription(`**RAPPEL**: les [arguments] sont _obligatoires_ tandis que les <arguments> ne le sont pas.`);
-calcHelp.addField("À quoi ça sert ?", "Cette commande sert à faire les calculs les plus basiques comme les additions, les soustractions, les multiplications, les divisions et les modulos.");
-calcHelp.addField("Comment on s'en sert ?", `Cette commande s'utilise ainsi : \`$calc [nombre] [opérateur] [nombre]\``);
-calcHelp.addField("Exemples:", `
-\`$calc 7 + 7\` → addition → 14
-\`$calc 7 - 5\` → soustraction → 2
-\`$calc 7 * 5\` → multiplication → 35
-\`$calc 10 / 5\` → division → 2
-`);
-calcHelp.addField("Alias:", "compute, c");
-
-let perimeterHelp = new discord.RichEmbed();
-perimeterHelp.setTitle(`Aide de la commande \`perimeter\``);
-perimeterHelp.setColor("00FFFF");
-perimeterHelp.setDescription(`**RAPPEL**: les [arguments] sont _obligatoires_ tandis que les <arguments> ne le sont pas.`);
-perimeterHelp.addField("À quoi ça sert ?", "Cette commande sert à calculer le périmètre de nombreuses figures (\`$pl\`)");
-perimeterHelp.addField("Comment on s'en sert ? (soit n le nombre de mesures)", `
-Cette commande s'utilise ainsi : \`$perimeter [figure] n[mesure]\`
-`);
-perimeterHelp.addField("Exemples:", `
-\`$perimeter square 5\` → périmètre d'un carré → 20
-\`$perimeter rectangle 8 6\` → périmètre d'un rectangle → 28
-`);
-perimeterHelp.addField("Alias:", "p");
-
-let areaHelp = new discord.RichEmbed();
-areaHelp.setTitle(`Aide de la commande \`area\``);
-areaHelp.setColor("00FFFF");
-areaHelp.setDescription(`**RAPPEL**: les [arguments] sont _obligatoires_ tandis que les <arguments> ne le sont pas.`);
-areaHelp.addField("À quoi ça sert ?", "Cette commande sert à calculer l'aire de nombreuses figures (\`$al\`)");
-areaHelp.addField("Comment on s'en sert ? (soit n le nombre de mesures)", `Cette commande s'utilise ainsi : \`$area [figure] n[mesure]\``);
-areaHelp.addField("Exemples:", `
-\`$area square 5\` → aire d'un carré → 25
-\`$area rectangle 8 6\` → aire d'un rectangle → 48
-`);
-areaHelp.addField("Alias:", "a");
-
-let volumeHelp = new discord.RichEmbed();
-volumeHelp.setTitle(`Aide de la commande \`volume\``);
-volumeHelp.setColor("00FFFF");
-volumeHelp.setDescription(`**RAPPEL**: les [arguments] sont _obligatoires_ tandis que les <arguments> ne le sont pas.`);
-volumeHelp.addField("À quoi ça sert ?", "Cette commande sert à calculer le volume de nombreuses figures (\`$vl\`)");
-volumeHelp.addField("Comment on s'en sert ? (soit n le nombre de mesures)", `Cette commande s'utilise ainsi : \`$volume [figure] n[mesure]\``);
-volumeHelp.addField("Exemples:", `
-\`$volume cube 5\` → volume d'un carré → 125
-\`$volume rectangleCuboid 8 6 5\` → volume d'un rectangle → 240
-`);
-volumeHelp.addField("Alias:", "v");
-
-let theoremHelp = new discord.RichEmbed();
-theoremHelp.setTitle(`Aide de la commande \`theorem\``);
-theoremHelp.setColor("00FFFF");
-theoremHelp.setDescription(`**RAPPEL**: les [arguments] sont _obligatoires_ tandis que les <arguments> ne le sont pas.`);
-theoremHelp.addField("À quoi ça sert ?", "Cette commande sert à effectuer quelques théorèmes (\`$theoremsList\`)");
-theoremHelp.addField("Comment on s'en sert ? (soit n le nombre de mesures)", `Cette commande s'utilise ainsi : \`$theorem [théorème] n[mesure]\``);
-theoremHelp.addField("Exemples:", `
-\`$theorem pythagoreHypotenuse 5 5\` → calcul d'hypoténuse → 7 (environ)
-\`$theorem pythagoreOtherSide 8 6\` → calcul d'un autre côté → 5 (environ)
-`);
-theoremHelp.addField("Alias:", "t");
-
-let pl = new discord.RichEmbed(); //perimeter list
-pl.setTitle("Liste des figures dont le périmètre peut être calculé");
-pl.setColor("D2691E");
-pl.setDescription(`Les figures dont le périmètre peut être calculé sont : 
-carré (\`square\`)
-rectangle (\`rectangle\`)
-cercle (\`circle\`)
-triangle (\`triangle\`)
-parallèlogramme (\`parallelogram\` | \`para\`)
-trapèze (\`trapeze\`)
-losange (\`diamond\`)
-`);
-
-let al = new discord.RichEmbed(); //area list
-al.setTitle("Liste des figures dont l'aire peut être calculée");
-al.setColor("D2691E");
-al.setDescription(`Les figures dont l'aire peut être calculée sont :
-carré (\`square\`)
-rectangle (\`rectangle\`)
-disque (\`disk\`)
-parallèlogramme (\`parallelogram\` | \`para\`)
-triangle (\`triangle\`)
-trapèze (\`trapeze\`)
-losange (\`diamond\`)
-sphère (\`sphere\`)
-cône (\`cone\`)
-cube (\`cube\`)
-pavé droit (\`r_c\` | \`rectangleCuboid\`)
-cylindre (\`cylinder\`)
-pyramide à base carrée (\`pyramid_s\`)
-`);
-
-let vl = new discord.RichEmbed(); //volume list
-vl.setTitle("Liste des figures dont le volume peut être calculé");
-vl.setColor("D2691E");
-vl.setDescription(`Les figures dont le volume peut être calculé sont :
-cube (\`cube\`)
-pavé droit (\`r_c\` | \`rectangleCuboid\`)
-cylindre (\`cylinder\`)
-cône (\`cone\`)
-pyramide à base carrée (\`pyramid_s\`)
-pyramide à base rectangle (\`pyramid_r\`)
-sphère (\`sphere\`)
-`);
-
-let tl = new discord.RichEmbed(); //theorems list
-tl.setTitle("Liste des théorèmes applicables");
-tl.setColor("D2691E");
-tl.setDescription(`Les théorèmes applicables sont :
-le théorème de Pythagore (calcul d'hypoténuse (\`pythagoreHypotenuse\` | \`pH\`) et calcul d'un autre côté (\`pythagoreOtherSide\` | \`pOS\`))
-
-le théorème de Thalès (calcul lorsque l'on connaît une fraction et un numérateur (\`thalesWithUnknownDenominator\` | \`tWUD\`) **ou** un dénominateur (\`thalesWithUnknownNumerator\` | \`tWUN\`))
-
-la réciproque du théorème de Pythagore (renvoie vrai si les 2 côtés au carré additionnés sont égaux au carré de l'autre côté (\`inverseOfPythagoreTheorem\` | \`iOPT\`))
-`);
-
-function add(a, b) {
-    return Math.round((a + b) * 1000) / 1000;
-}
-
-function subtract(a, b) {
-    return Math.round((a - b) * 1000) / 1000;
-}
-
-function multiply(a, b) {
-    return Math.round((a * b) * 1000) / 1000;
-}
-
-function divide(a, b) {
-    return Math.round((a / b) * 1000) / 1000;
-}
-
-function modulo(a, b) {
-    return Math.round((a % b) * 1000) / 1000;
-}
-
-function squarePerimeter(side) {
-    return Math.round((side * 4) * 1000) / 1000;
-}
-
-function rectanglePerimeter(length, width) {
-    return Math.round(((length * 2) + (width * 2)) * 1000) / 1000;
-}
-
-function circlePerimeter(radius) {
-    return Math.round((radius * 2 * pi) * 1000) / 1000;
-}
-
-function trianglePerimeter(base, side1, side2) {
-    return Math.round((base + side1 + side2) * 1000) / 1000;
-}
-
-function parallelogramPerimeter(side1, side2) {
-    return Math.round(((side1 * 2) + (side2 * 2)) * 1000) / 1000;
-}
-
-function trapezePerimeter(base1, base2, side1, side2) {
-    return Math.round((base1 + base2 + side1 + side2) * 1000) / 1000;
-}
-
-function diamondPerimeter(side) {
-    return Math.round((side * 4) * 1000) / 1000;
-}
-
-function squareArea(side) {
-    return Math.round((side * side) * 1000) / 1000;
-}
-
-function rectangleArea(length, width) {
-    return Math.round((length * width) * 1000) / 1000;
-}
-
-function diskArea(radius) {
-    return Math.round(((radius * radius) * pi) * 1000) / 1000;
-}
-
-function parallelogramArea(base, height) {
-    return Math.round((base * height) * 1000) / 1000;
-}
-
-function triangleArea(base, height) {
-    return Math.round(((base * height) / 2) * 1000) / 1000;
-}
-
-function trapezeArea(base1, base2, height) {
-    return Math.round((((base1 + base2) * height) / 2) * 1000) / 1000;
-}
-
-function diamondArea(diagonal1, diagonal2) {
-    return Math.round((diagonal1 * diagonal2 / 2) * 1000) / 1000;
-}
-
-function sphereArea(radius) {
-    return Math.round(((radius * radius) * (pi * 4)) * 1000) / 1000;
-}
-
-function coneArea(radius, height) {
-    return Math.round((Math.sqrt((radius * radius) + (height * height)) * pi * radius) * 1000) / 1000;
-}
-
-function cubeArea(arete) {
-    return Math.round(((arete * arete) * 6) * 1000) / 1000;
-}
-
-function rectangleCuboidArea(length, width, height) {
-    return Math.round(((2 * length * width) + (2 * length * height) + (2 * width * height)) * 1000) / 1000;
-}
-
-function cylinderArea(radius, height) {
-    return Math.round((2 * pi * radius * height) * 1000) / 1000;
-}
-
-function squareBasedPyramidArea(baseSide, height) {
-    return Math.round(((baseSide * 4) * Math.sqrt((height * height) + (baseSide / 2) * (baseSide / 2)) / 2) * 1000) / 1000;
-}
-
-function cubeVolume(arete) {
-    return Math.round((Math.pow(arete, 3)) * 1000) / 1000;
-}
-
-function rectangleCuboidVolume(length, width, height) {
-    return Math.round((length * width * height) * 1000) / 1000;
-}
-
-function cylinderVolume(radius, height) {
-    return Math.round((pi * (radius * radius) * height) * 1000) / 1000;
-}
-
-function coneVolume(radius, height) {
-    return Math.round(((pi * (radius * radius) * height) / 3) * 1000) / 1000;
-}
-
-function squareBasedPyramidVolume(side, height) {
-    return Math.round((((side * side) * height) / 3) * 1000) / 1000;
-}
-
-function rectangleBasedPyramidVolume(length, width, height) {
-    return Math.round((((length * width) * height) / 3) * 1000) / 1000;
-}
-
-function sphereVolume(radius) {
-    return Math.round(((4.0 / 3.0) * pi * Math.pow(radius, 3)) * 1000) / 1000;
-}
 
 function pythagoreOtherSide(hypotenuse, knownSide) {
     return Math.round((Math.sqrt((hypotenuse * hypotenuse) - (knownSide * knownSide))) * 1000) / 1000;
@@ -348,7 +95,7 @@ client.on(`message`, message => {
                 let b = parseFloat(args[2]);
 
                 if(!Number.isNaN(a) && !Number.isNaN(b) && args.length === 3 && a < Number.MAX_SAFE_INTEGER && b < Number.MAX_SAFE_INTEGER) {
-                    message.channel.send(result("Addition", a + " + " + b, add(a, b)));
+                    message.channel.send(result("Addition", a + " + " + b, calcFunctions.add(a, b)));
                 }
 
                 else if(a > Number.MAX_SAFE_INTEGER || b > Number.MAX_SAFE_INTEGER) {
@@ -367,7 +114,7 @@ client.on(`message`, message => {
                 let b = parseFloat(args[2]);
 
                 if(!Number.isNaN(a) && !Number.isNaN(b) && args.length === 3 && a < Number.MAX_SAFE_INTEGER && b < Number.MAX_SAFE_INTEGER) {
-                    message.channel.send(result("Soustraction", a + " - " + b, subtract(a, b)));
+                    message.channel.send(result("Soustraction", a + " - " + b, calcFunctions.subtract(a, b)));
                 }
 
                 else if(a > Number.MAX_SAFE_INTEGER || b > Number.MAX_SAFE_INTEGER) {
@@ -386,7 +133,7 @@ client.on(`message`, message => {
                 let b = parseFloat(args[2]);
 
                 if(!Number.isNaN(a) && !Number.isNaN(b) && args.length === 3 && a < Number.MAX_SAFE_INTEGER && b < Number.MAX_SAFE_INTEGER) {
-                    message.channel.send(result("Multiplication", a + " * " + b, multiply(a, b)));
+                    message.channel.send(result("Multiplication", a + " * " + b, calcFunctions.multiply(a, b)));
                 }
 
                 else if(a > Number.MAX_SAFE_INTEGER || b > Number.MAX_SAFE_INTEGER) {
@@ -405,7 +152,7 @@ client.on(`message`, message => {
                 let b = parseFloat(args[2]);
 
                 if(!Number.isNaN(a) && !Number.isNaN(b) && args.length === 3 && a < Number.MAX_SAFE_INTEGER && b < Number.MAX_SAFE_INTEGER && b !== 0) {
-                    message.channel.send(result("Division", a + " / " + b, divide(a, b)));
+                    message.channel.send(result("Division", a + " / " + b, calcFunctions.divide(a, b)));
                 }
 
                 else if(a > Number.MAX_SAFE_INTEGER || b > Number.MAX_SAFE_INTEGER) {
@@ -428,7 +175,7 @@ client.on(`message`, message => {
                 let b = Number(args[2]);
 
                 if(!Number.isNaN(a) && !Number.isNaN(b) && args.length === 3 && a < Number.MAX_SAFE_INTEGER && b < Number.MAX_SAFE_INTEGER) {
-                    message.channel.send(result("Modulo", a + " % " + b, modulo(a, b)));
+                    message.channel.send(result("Modulo", a + " % " + b, calcFunctions.modulo(a, b)));
                 }
 
                 else if(a > Number.MAX_SAFE_INTEGER || b > Number.MAX_SAFE_INTEGER) {
@@ -448,7 +195,7 @@ client.on(`message`, message => {
                 let side = parseFloat(args[1]);
 
                 if(!Number.isNaN(side) && args.length === 2 && side < Number.MAX_SAFE_INTEGER) {
-                    message.channel.send(result("P", side + " * 4", squarePerimeter(side)));
+                    message.channel.send(result("P", side + " * 4", perimeterFunctions.squarePerimeter(side)));
                 }
 
                 else if(side > Number.MAX_SAFE_INTEGER) {
@@ -467,7 +214,7 @@ client.on(`message`, message => {
                 let width = parseFloat(args[2]);
 
                 if(!Number.isNaN(length) && !Number.isNaN(width) && args.length === 3 && length < Number.MAX_SAFE_INTEGER && width < Number.MAX_SAFE_INTEGER) {
-                    message.channel.send(result("P", "(" + length + " * 2) + (" + width + " * 2)", rectanglePerimeter(length, width)));
+                    message.channel.send(result("P", "(" + length + " * 2) + (" + width + " * 2)", perimeterFunctions.rectanglePerimeter(length, width)));
                 }
 
                 else if(length > Number.MAX_SAFE_INTEGER || width > Number.MAX_SAFE_INTEGER) {
@@ -485,7 +232,7 @@ client.on(`message`, message => {
                 let radius = parseFloat(args[1]);
 
                 if(!Number.isNaN(radius) && args.length === 2 && radius < Number.MAX_SAFE_INTEGER) {
-                    message.channel.send(result("P", "pi * 2 * " + radius, circlePerimeter(radius)));
+                    message.channel.send(result("P", "pi * 2 * " + radius, perimeterFunctions.circlePerimeter(radius)));
                 }
 
                 else if(radius > Number.MAX_SAFE_INTEGER) {
@@ -505,7 +252,7 @@ client.on(`message`, message => {
                 let side2 = parseFloat(args[3]);
 
                 if(!Number.isNaN(base) && !Number.isNaN(side1) && !Number.isNaN(side2) && args.length === 4 && base < Number.MAX_SAFE_INTEGER && side1 < Number.MAX_SAFE_INTEGER && side2 < Number.MAX_SAFE_INTEGER) {
-                    message.channel.send(result("P", base + " + " + side1 + " + " + side2, trianglePerimeter(base, side1, side2)));
+                    message.channel.send(result("P", base + " + " + side1 + " + " + side2, perimeterFunctions.trianglePerimeter(base, side1, side2)));
                 }
 
                 else if(base > Number.MAX_SAFE_INTEGER || side1 > Number.MAX_SAFE_INTEGER || side2 > Number.MAX_SAFE_INTEGER) {
@@ -524,7 +271,7 @@ client.on(`message`, message => {
                 let side2 = parseFloat(args[2]);
 
                 if(!Number.isNaN(side1) && !Number.isNaN(side2) && args.length === 3 && side1 < Number.MAX_SAFE_INTEGER && side2 < Number.MAX_SAFE_INTEGER) {
-                    message.channel.send(result("P", "(" + side1 + " * 2) + (" + side2 + " * 2)", parallelogramPerimeter(side1, side2)));
+                    message.channel.send(result("P", "(" + side1 + " * 2) + (" + side2 + " * 2)", perimeterFunctions.parallelogramPerimeter(side1, side2)));
                 }
 
                 else if(side1 > Number.MAX_SAFE_INTEGER || side2 > Number.MAX_SAFE_INTEGER) {
@@ -545,7 +292,7 @@ client.on(`message`, message => {
                 let side2 = parseFloat(args[4]);
 
                 if(!Number.isNaN(base1) && !Number.isNaN(base2) && !Number.isNaN(side1) && !Number.isNaN(side2) && args.length === 5 && base1 < Number.MAX_SAFE_INTEGER && base2 < Number.MAX_SAFE_INTEGER && side1 < Number.MAX_SAFE_INTEGER && side2 < Number.MAX_SAFE_INTEGER) {
-                    message.channel.send(result("P", base1 + " + " + base2 + " + " + side1 + " + " + side2, trapezePerimeter(base1, base2, side1, side2)));
+                    message.channel.send(result("P", base1 + " + " + base2 + " + " + side1 + " + " + side2, perimeterFunctions.trapezePerimeter(base1, base2, side1, side2)));
                 }
 
                 else if(base1 > Number.MAX_SAFE_INTEGER || base2 > Number.MAX_SAFE_INTEGER || side1 > Number.MAX_SAFE_INTEGER || side2 > Number.MAX_SAFE_INTEGER) {
@@ -563,7 +310,7 @@ client.on(`message`, message => {
                 let side = parseFloat(args[1]);
 
                 if(!Number.isNaN(side) && args.length === 2 && side < Number.MAX_SAFE_INTEGER) {
-                    message.channel.send(result("P", side + " * 4", diamondPerimeter(side)));
+                    message.channel.send(result("P", side + " * 4", perimeterFunctions.diamondPerimeter(side)));
                 }
 
                 else if(side > Number.MAX_SAFE_INTEGER) {
@@ -583,7 +330,7 @@ client.on(`message`, message => {
                 let side = parseFloat(args[1]);
 
                 if(!Number.isNaN(side) && args.length === 2 && side < Number.MAX_SAFE_INTEGER) {
-                    message.channel.send(result("A", side + " * " + side, squareArea(side)));
+                    message.channel.send(result("A", side + " * " + side, areaFunctions.squareArea(side)));
                 }
 
                 else if(side > Number.MAX_SAFE_INTEGER) {
@@ -602,7 +349,7 @@ client.on(`message`, message => {
                 let width = parseFloat(args[2]);
 
                 if(!Number.isNaN(length) && !Number.isNaN(width) && args.length === 3 && length < Number.MAX_SAFE_INTEGER && width < Number.MAX_SAFE_INTEGER) {
-                    message.channel.send(result("A", length + " * " + width, rectangleArea(length, width)));
+                    message.channel.send(result("A", length + " * " + width, areaFunctions.rectangleArea(length, width)));
                 }
 
                 else if(length > Number.MAX_SAFE_INTEGER || width > Number.MAX_SAFE_INTEGER) {
@@ -620,7 +367,7 @@ client.on(`message`, message => {
                 let radius = parseFloat(args[1]);
 
                 if(!Number.isNaN(radius) && args.length === 2 && radius < Number.MAX_SAFE_INTEGER) {
-                    message.channel.send(result("A", "(" + radius + " * " + radius + ") * pi", diskArea(radius)));
+                    message.channel.send(result("A", "(" + radius + " * " + radius + ") * pi", areaFunctions.diskArea(radius)));
                 }
 
                 else if(radius > Number.MAX_SAFE_INTEGER) {
@@ -639,7 +386,7 @@ client.on(`message`, message => {
                 let height = parseFloat(args[2]);
 
                 if(!Number.isNaN(base) && !Number.isNaN(height) && args.length === 3 && base < Number.MAX_SAFE_INTEGER && height < Number.MAX_SAFE_INTEGER) {
-                    message.channel.send(result("A", base + " * " + height, parallelogramArea(base, height)));
+                    message.channel.send(result("A", base + " * " + height, areaFunctions.parallelogramArea(base, height)));
                 }
 
                 else if(base > Number.MAX_SAFE_INTEGER || height > Number.MAX_SAFE_INTEGER) {
@@ -658,7 +405,7 @@ client.on(`message`, message => {
                 let height = parseFloat(args[2]);
 
                 if(!Number.isNaN(base) && !Number.isNaN(height) && args.length === 3 && base < Number.MAX_SAFE_INTEGER && height < Number.MAX_SAFE_INTEGER) {
-                    message.channel.send(result("A", "(" + base + " * " + height + ") / 2", triangleArea(base, height)));
+                    message.channel.send(result("A", "(" + base + " * " + height + ") / 2", areaFunctions.triangleArea(base, height)));
                 }
 
                 else if(base > Number.MAX_SAFE_INTEGER || height > Number.MAX_SAFE_INTEGER) {
@@ -678,7 +425,7 @@ client.on(`message`, message => {
                 let height = parseFloat(args[3]);
 
                 if(!Number.isNaN(base1) && !Number.isNaN(base2) && !Number.isNaN(height) && args.length === 4 && base1 < Number.MAX_SAFE_INTEGER && base2 < Number.MAX_SAFE_INTEGER && height < Number.MAX_SAFE_INTEGER) {
-                    message.channel.send(result("A", "((" + base1 + " + " + base2 + ") * " + height + ") / 2", trapezeArea(base1, base2, height)));
+                    message.channel.send(result("A", "((" + base1 + " + " + base2 + ") * " + height + ") / 2", areaFunctions.trapezeArea(base1, base2, height)));
                 }
 
                 else if(base1 > Number.MAX_SAFE_INTEGER || base2 > Number.MAX_SAFE_INTEGER || height > Number.MAX_SAFE_INTEGER) {
@@ -697,7 +444,7 @@ client.on(`message`, message => {
                 let diagonal2 = parseFloat(args[2]);
 
                 if(!Number.isNaN(diagonal1) && !Number.isNaN(diagonal2) && args.length === 3 && diagonal1 < Number.MAX_SAFE_INTEGER && diagonal2 < Number.MAX_SAFE_INTEGER) {
-                    message.channel.send(result("A", diagonal1 + " * " + diagonal2 + " / 2", diamondArea(diagonal1, diagonal2)));
+                    message.channel.send(result("A", diagonal1 + " * " + diagonal2 + " / 2", areaFunctions.diamondArea(diagonal1, diagonal2)));
                 }
 
                 else if(diagonal1 > Number.MAX_SAFE_INTEGER || diagonal2 > Number.MAX_SAFE_INTEGER) {
@@ -715,7 +462,7 @@ client.on(`message`, message => {
                 let radius = parseFloat(args[1]);
 
                 if(!Number.isNaN(radius) && args.length === 2 && radius < Number.MAX_SAFE_INTEGER) {
-                    message.channel.send(result("A", "(" + radius + " * " + radius + ") * (pi * 4)", sphereArea(radius)));
+                    message.channel.send(result("A", "(" + radius + " * " + radius + ") * (pi * 4)", areaFunctions.sphereArea(radius)));
                 }
 
                 else if(radius > Number.MAX_SAFE_INTEGER) {
@@ -734,7 +481,7 @@ client.on(`message`, message => {
                 let height = parseFloat(args[2]);
 
                 if(!Number.isNaN(radius) && !Number.isNaN(height) && args.length === 3 && radius < Number.MAX_SAFE_INTEGER && height < Number.MAX_SAFE_INTEGER) {
-                    message.channel.send(result("A", "racine carrée de ((" + radius + " * " + radius + ") + (" + height + " * " + height + ")) * pi * " + radius, coneArea(radius, height)));
+                    message.channel.send(result("A", "racine carrée de ((" + radius + " * " + radius + ") + (" + height + " * " + height + ")) * pi * " + radius, areaFunctions.coneArea(radius, height)));
                 }
 
                 else if(radius > Number.MAX_SAFE_INTEGER || height > Number.MAX_SAFE_INTEGER) {
@@ -752,7 +499,7 @@ client.on(`message`, message => {
                 let arete = parseFloat(args[1]);
 
                 if(!Number.isNaN(arete) && args.length === 1 && arete < Number.MAX_SAFE_INTEGER) {
-                    message.channel.send(result("A", arete + " * " + arete + " * 6", cubeArea(arete)));
+                    message.channel.send(result("A", arete + " * " + arete + " * 6", areaFunctions.cubeArea(arete)));
                 }
 
                 else if(arete > Number.MAX_SAFE_INTEGER) {
@@ -772,7 +519,7 @@ client.on(`message`, message => {
                 let height = parseFloat(args[3]);
 
                 if(!Number.isNaN(length) && !Number.isNaN(width) && !Number.isNaN(height) && args.length === 3 && length < Number.MAX_SAFE_INTEGER && width < Number.MAX_SAFE_INTEGER && height < Number.MAX_SAFE_INTEGER) {
-                    message.channel.send(result("A", "(" + length + " * " + width + ") + (" + width + " * " + height + ") + (" + length + " * " + width + ")", rectangleCuboidArea(length, width, height)));
+                    message.channel.send(result("A", "(" + length + " * " + width + ") + (" + width + " * " + height + ") + (" + length + " * " + width + ")", areaFunctions.rectangleCuboidArea(length, width, height)));
                 }
 
                 else if(length > Number.MAX_SAFE_INTEGER || width > Number.MAX_SAFE_INTEGER || height > Number.MAX_SAFE_INTEGER) {
@@ -791,7 +538,7 @@ client.on(`message`, message => {
                 let height = parseFloat(args[2]);
 
                 if(!Number.isNaN(radius) && !Number.isNaN(height) && args.length === 3 && radius < Number.MAX_SAFE_INTEGER && height < Number.MAX_SAFE_INTEGER) {
-                    message.channel.send(result("A", "pi * (" + radius + " * " + radius + ") * " + height, cylinderArea(radius, height)));
+                    message.channel.send(result("A", "pi * (" + radius + " * " + radius + ") * " + height, areaFunctions.cylinderArea(radius, height)));
                 }
 
                 else if(radius > Number.MAX_SAFE_INTEGER || height > Number.MAX_SAFE_INTEGER) {
@@ -810,7 +557,7 @@ client.on(`message`, message => {
                 let height = parseFloat(args[2]);
 
                 if(!Number.isNaN(baseSide) && !Number.isNaN(height) && args.length === 3 && baseSide < Number.MAX_SAFE_INTEGER && height < Number.MAX_SAFE_INTEGER) {
-                    message.channel.send(result("A", "(" + baseSide + " * 4 * racine carrée de ((" + height + " * " + height + ") + (" + baseSide + " / 2) * (" + baseSide + " / 2)) / 2", squareBasedPyramidArea(baseSide, height)));
+                    message.channel.send(result("A", "(" + baseSide + " * 4 * racine carrée de ((" + height + " * " + height + ") + (" + baseSide + " / 2) * (" + baseSide + " / 2)) / 2", areaFunctions.squareBasedPyramidArea(baseSide, height)));
                 }
 
                 else if(baseSide > Number.MAX_SAFE_INTEGER || height > Number.MAX_SAFE_INTEGER) {
@@ -830,7 +577,7 @@ client.on(`message`, message => {
                 let arete = parseFloat(args[1]);
 
                 if(!Number.isNaN(arete) && args.length === 2 && arete < Number.MAX_SAFE_INTEGER) {
-                    message.channel.send(result("V", arete + " * " + arete + " * " + arete, cubeVolume(arete)));
+                    message.channel.send(result("V", arete + " * " + arete + " * " + arete, volumeFunctions.cubeVolume(arete)));
                 }
 
                 else if(arete > Number.MAX_SAFE_INTEGER) {
@@ -850,7 +597,7 @@ client.on(`message`, message => {
                 let height = parseFloat(args[3]);
 
                 if(!Number.isNaN(length) && !Number.isNaN(width) && !Number.isNaN(height) && args.length === 4 && length < Number.MAX_SAFE_INTEGER && width < Number.MAX_SAFE_INTEGER && height < Number.MAX_SAFE_INTEGER) {
-                    message.channel.send(result("V", length + " * " + width + " * " + height, rectangleCuboidVolume(length, width, height)));
+                    message.channel.send(result("V", length + " * " + width + " * " + height, volumeFunctions.rectangleCuboidVolume(length, width, height)));
                 }
 
                 else if(length > Number.MAX_SAFE_INTEGER || width > Number.MAX_SAFE_INTEGER || height > Number.MAX_SAFE_INTEGER) {
@@ -869,7 +616,7 @@ client.on(`message`, message => {
                 let height = parseFloat(args[2]);
 
                 if(!Number.isNaN(radius) && !Number.isNaN(height) &&  args.length === 3 && radius < Number.MAX_SAFE_INTEGER && height < Number.MAX_SAFE_INTEGER) {
-                    message.channel.send(result("V", "pi * (" + radius + " * " + radius + ") * " + height, cylinderVolume(radius, height)));
+                    message.channel.send(result("V", "pi * (" + radius + " * " + radius + ") * " + height, volumeFunctions.cylinderVolume(radius, height)));
                 }
 
                 else if(radius > Number.MAX_SAFE_INTEGER || height > Number.MAX_SAFE_INTEGER) {
@@ -888,7 +635,7 @@ client.on(`message`, message => {
                 let height = parseFloat(args[2]);
 
                 if(!Number.isNaN(radius) && !Number.isNaN(height) &&  args.length === 3 && radius < Number.MAX_SAFE_INTEGER && height < Number.MAX_SAFE_INTEGER) {
-                    message.channel.send(result("V", "pi * (" + radius + " * " + radius + ") * " + height + " / 3", coneVolume(radius, height)));
+                    message.channel.send(result("V", "pi * (" + radius + " * " + radius + ") * " + height + " / 3", volumeFunctions.coneVolume(radius, height)));
                 }
 
                 else if(radius > Number.MAX_SAFE_INTEGER || height > Number.MAX_SAFE_INTEGER) {
@@ -907,7 +654,7 @@ client.on(`message`, message => {
                 let height = parseFloat(args[2]);
 
                 if(!Number.isNaN(side) && !Number.isNaN(height) &&  args.length === 3 && side < Number.MAX_SAFE_INTEGER && height < Number.MAX_SAFE_INTEGER) {
-                    message.channel.send(result("V", "(" + side + " * " + side + ") * " + height + " / 3", squareBasedPyramidVolume(side, height)));
+                    message.channel.send(result("V", "(" + side + " * " + side + ") * " + height + " / 3", volumeFunctions.squareBasedPyramidVolume(side, height)));
                 }
 
                 else if(side > Number.MAX_SAFE_INTEGER || height > Number.MAX_SAFE_INTEGER) {
@@ -927,7 +674,7 @@ client.on(`message`, message => {
                 let height = parseFloat(args[3]);
 
                 if(!Number.isNaN(length) && !Number.isNaN(width) && !Number.isNaN(height) &&  args.length === 4 && length < Number.MAX_SAFE_INTEGER && width < Number.MAX_SAFE_INTEGER && height < Number.MAX_SAFE_INTEGER) {
-                    message.channel.send(result("V", "(" + length + " * " + width + ") * " + height + " / 3", rectangleBasedPyramidVolume(side, height)));
+                    message.channel.send(result("V", "(" + length + " * " + width + ") * " + height + " / 3", volumeFunctions.rectangleBasedPyramidVolume(side, height)));
                 }
 
                 else if(length > Number.MAX_SAFE_INTEGER || width > Number.MAX_SAFE_INTEGER || height > Number.MAX_SAFE_INTEGER) {
@@ -945,7 +692,7 @@ client.on(`message`, message => {
                 let radius = parseFloat(args[1]);
 
                 if(!Number.isNaN(radius) && args.length === 2 && radius < Number.MAX_SAFE_INTEGER) {
-                    message.channel.send(result("V", "(4 / 3) * pi * (" + radius + " * " + radius + " * " + radius + ")", sphereVolume(radius)));
+                    message.channel.send(result("V", "(4 / 3) * pi * (" + radius + " * " + radius + " * " + radius + ")", volumeFunctions.sphereVolume(radius)));
                 }
 
                 else if(radius > Number.MAX_SAFE_INTEGER) {
@@ -1062,51 +809,51 @@ client.on(`message`, message => {
 
         else if(command === "help") {
             if(!args || args.length === 0) {
-                message.channel.send(help);
+                message.channel.send(embeds.help);
             }
 
             else if(args[0] === "calc" || args[0] === "compute" || args[0] === "c") {
-                message.channel.send(calcHelp);
+                message.channel.send(embeds.calcHelp);
             }
 
             else if(args[0] === "perimeter" || args[0] === "p") {
-                message.channel.send(perimeterHelp);
+                message.channel.send(embeds.perimeterHelp);
             }
 
             else if(args[0] === "area" || args[0] === "a") {
-                message.channel.send(areaHelp);
+                message.channel.send(embeds.areaHelp);
             }
 
             else if(args[0] === "volume" || args[0] === "v") {
-                message.channel.send(volumeHelp);
+                message.channel.send(embeds.volumeHelp);
             }
 
             else if(args[0] === "theorem" || args[0] === "t") {
-                message.channel.send(theoremHelp);
+                message.channel.send(embeds.theoremHelp);
             }
         }
 
         else if(command === "pl" || command === "perimeter_list") {
             if(!args || args.length === 0) {
-                message.channel.send(pl);
+                message.channel.send(embeds.pl);
             }
         }
 
         else if(command === "al" || command === "area_list") {
             if(!args || args.length === 0) {
-                message.channel.send(al);
+                message.channel.send(embeds.al);
             }
         }
 
         else if(command === "vl" || command === "volume_list") {
             if(!args || args.length === 0) {
-                message.channel.send(vl);
+                message.channel.send(embeds.vl);
             }
         }
 
         else if(command === "tl" || command === "theorems_list") {
             if(!args || args.length === 0) {
-                message.channel.send(tl);
+                message.channel.send(embeds.tl);
             }
         }
     }
