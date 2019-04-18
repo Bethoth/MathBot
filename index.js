@@ -836,5 +836,10 @@ client.on(`message`, message => {
                 message.channel.send(embeds.tl);
             }
         }
+
+        else if(command === "invite") {
+            message.channel.send(embeds.invite);
+        }
     }
 });
+
