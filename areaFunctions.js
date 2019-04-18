@@ -1,3 +1,5 @@
+const constants = require("./constants");
+
 function squareArea(side) {
     return Math.round((side * side) * 1000) / 1000;
 }
@@ -7,7 +9,7 @@ function rectangleArea(length, width) {
 }
 
 function diskArea(radius) {
-    return Math.round(((radius * radius) * pi) * 1000) / 1000;
+    return Math.round(((radius * radius) * constants.pi) * 1000) / 1000;
 }
 
 function parallelogramArea(base, height) {
@@ -27,11 +29,11 @@ function diamondArea(diagonal1, diagonal2) {
 }
 
 function sphereArea(radius) {
-    return Math.round(((radius * radius) * (pi * 4)) * 1000) / 1000;
+    return Math.round(((radius * radius) * (constants.pi * 4)) * 1000) / 1000;
 }
 
 function coneArea(radius, height) {
-    return Math.round((Math.sqrt((radius * radius) + (height * height)) * pi * radius) * 1000) / 1000;
+    return Math.round((Math.sqrt((radius * radius) + (height * height)) * constants.pi * radius) * 1000) / 1000;
 }
 
 function cubeArea(arete) {
@@ -43,7 +45,7 @@ function rectangleCuboidArea(length, width, height) {
 }
 
 function cylinderArea(radius, height) {
-    return Math.round((2 * pi * radius * height) * 1000) / 1000;
+    return Math.round((2 * constants.pi * radius * height) * 1000) / 1000;
 }
 
 function squareBasedPyramidArea(baseSide, height) {
