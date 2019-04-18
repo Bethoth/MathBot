@@ -6,28 +6,8 @@ const calcFunctions = require("./calcFunctions");
 const perimeterFunctions = require("./perimeterFunctions");
 const areaFunctions = require("./areaFunctions");
 const volumeFunctions = require("./volumeFunctions");
-
-const prefix = '$';
-const pi = Math.PI;
-
-function pythagoreOtherSide(hypotenuse, knownSide) {
-    return Math.round((Math.sqrt((hypotenuse * hypotenuse) - (knownSide * knownSide))) * 1000) / 1000;
-}
-
-function inverseOfPythagoreTheorem(referenceSide, otherSide1, otherSide2) {
-    let squaredReferenceSide = referenceSide * referenceSide;
-    let squaredOtherSide1 = otherSide1 * otherSide1;
-    let squaredOtherSide2 = otherSide2 * otherSide2;
-    return squaredReferenceSide === (squaredOtherSide1 + squaredOtherSide2);
-}
-
-function thalesWithUnknownNumerator(knownFractionNumerator, knownFractionDenominator, knownDenominator) {
-    return Math.round(((knownFractionNumerator * knownDenominator) / knownFractionDenominator) * 1000) / 1000;
-}
-
-function thalesWithUnknownDenominator(knownFractionNumerator, knownFractionDenominator, knownNumerator) {
-    return Math.round(((knownFractionDenominator * knownNumerator) / knownFractionNumerator) * 1000) / 1000;
-}
+const theoremFunctions = require("./theoremFunctions");
+const constants = require("./constants");
 
 function numberOfParamError(expectedNumber) {
     let embed = new discord.RichEmbed();
@@ -81,12 +61,12 @@ function result(calculation, explanation, result, unit = "") {
 
 client.on(`ready`, () => {
     console.log(`I'm ready !`);
-    client.user.setActivity("prefix : $ | $help");
+    client.user.setActivity("préfixe : " + constants.prefix + " | " + constants.prefix + " help");
 });
 
 client.on(`message`, message => {
-    if(message.content.startsWith(prefix)) {
-        const args = message.content.slice(prefix.length).trim().split(/ +/g);
+    if(message.content.startsWith(constants.prefix)) {
+        const args = message.content.slice(constants.prefix.length).trim().split(/ +/g);
         const command = args.shift().toLowerCase();
 
         if(command === "calc" || command === "compute" || command === "c") {
@@ -713,7 +693,7 @@ client.on(`message`, message => {
                 let knownSide = parseFloat(args[2]);
 
                 if(!Number.isNaN(hypotenuse) && !Number.isNaN(knownSide) && args.length === 3 && hypotenuse < Number.MAX_SAFE_INTEGER && knownSide < Number.MAX_SAFE_INTEGER) {
-                    message.channel.send(result("Théorème de Pythagore", "racine carrée de (" + hypotenuse + " * " + hypotenuse + ") - (" + knownSide + " * " + knownSide + ")", pythagoreOtherSide(hypotenuse, knownSide)));
+                    message.channel.send(result("Théorème de Pythagore", "racine carrée de (" + hypotenuse + " * " + hypotenuse + ") - (" + knownSide + " * " + knownSide + ")", theoremFunctions.pythagoreOtherSide(hypotenuse, knownSide)));
                 }
 
                 else if(hypotenuse > Number.MAX_SAFE_INTEGER || knownSide > Number.MAX_SAFE_INTEGER) {
@@ -752,7 +732,7 @@ client.on(`message`, message => {
                 let knownDenominator = parseFloat(args[3]);
 
                 if(!Number.isNaN(knownFractionNumerator) && !Number.isNaN(knownFractionDenominator) && !Number.isNaN(knownDenominator) && args.length === 4 && knownFractionNumerator < Number.MAX_SAFE_INTEGER && knownFractionDenominator < Number.MAX_SAFE_INTEGER && knownDenominator < Number.MAX_SAFE_INTEGER) {
-                    message.channel.send(result("Théorème de Thalès", "(" + knownFractionNumerator + " * " + knownDenominator + ") / " + knownFractionDenominator, thalesWithUnknownNumerator(knownFractionNumerator, knownFractionDenominator, knownDenominator)));
+                    message.channel.send(result("Théorème de Thalès", "(" + knownFractionNumerator + " * " + knownDenominator + ") / " + knownFractionDenominator, theoremFunctions.thalesWithUnknownNumerator(knownFractionNumerator, knownFractionDenominator, knownDenominator)));
                 }
 
                 else if(knownFractionNumerator > Number.MAX_SAFE_INTEGER || knownFractionDenominator > Number.MAX_SAFE_INTEGER || knownDenominator > Number.MAX_SAFE_INTEGER) {
@@ -772,7 +752,7 @@ client.on(`message`, message => {
                 let knownNumerator = parseFloat(args[3]);
 
                 if(!Number.isNaN(knownFractionNumerator) && !Number.isNaN(knownFractionDenominator) && !Number.isNaN(knownNumerator) && args.length === 4 && knownFractionNumerator < Number.MAX_SAFE_INTEGER && knownFractionDenominator < Number.MAX_SAFE_INTEGER && knownNumerator < Number.MAX_SAFE_INTEGER) {
-                    message.channel.send(result("Théorème de Thalès", "(" + knownFractionDenominator + " * " + knownNumerator + ") / " + knownFractionNumerator, thalesWithUnknownDenominator(knownFractionNumerator, knownFractionDenominator, knownNumerator)));
+                    message.channel.send(result("Théorème de Thalès", "(" + knownFractionDenominator + " * " + knownNumerator + ") / " + knownFractionNumerator, theoremFunctions.thalesWithUnknownDenominator(knownFractionNumerator, knownFractionDenominator, knownNumerator)));
                 }
 
                 else if(knownFractionNumerator > Number.MAX_SAFE_INTEGER || knownFractionDenominator > Number.MAX_SAFE_INTEGER || knownNumerator > Number.MAX_SAFE_INTEGER) {
@@ -792,7 +772,7 @@ client.on(`message`, message => {
                 let otherSide2 = parseFloat(args[3]);
 
                 if(!Number.isNaN(referenceSide) && !Number.isNaN(otherSide1) && !Number.isNaN(otherSide2) && args.length === 4 && referenceSide < Number.MAX_SAFE_INTEGER && otherSide1 < Number.MAX_SAFE_INTEGER && otherSide2 < Number.MAX_SAFE_INTEGER) {
-                    message.channel.send(result("Réciproque du théorème de Pythagore", referenceSide + "² = " + otherSide1 + "² + " + otherSide2 + "² ?", inverseOfPythagoreTheorem(referenceSide, otherSide1, otherSide2)));
+                    message.channel.send(result("Réciproque du théorème de Pythagore", referenceSide + "² = " + otherSide1 + "² + " + otherSide2 + "² ?", theoremFunctions.inverseOfPythagoreTheorem(referenceSide, otherSide1, otherSide2)));
                 }
 
                 else if(referenceSide > Number.MAX_SAFE_INTEGER || otherSide1 > Number.MAX_SAFE_INTEGER || otherSide2 > Number.MAX_SAFE_INTEGER) {
