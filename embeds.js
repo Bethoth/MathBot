@@ -1,5 +1,7 @@
 const {RichEmbed} = require("discord.js");
 
+const arrayForColor = ['1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f'];
+
 const help = new RichEmbed();
 help.setTitle(`Aide`);
 help.setColor("00FFFF");
@@ -141,6 +143,15 @@ la réciproque du théorème de Pythagore (renvoie vrai si les 2 côtés au carr
 `);
 
 
+const invite = new RichEmbed();
+invite.setTitle("Invitation, serveur de test et GitHub du bot");
+invite.setColor(Math.round(Math.random() * 16581375));
+invite.setDescription(`Voilà quelques liens utiles à mon sujet :`);
+invite.addField(`:link: Invitation du bot :`, "[MathBot](https://discordapp.com/oauth2/authorize?client_id=557252483705995279&scope=bot&permissions=2146958847)");
+invite.addField(`:link: Serveur de test :`, "[My Bots Test](https://discord.gg/zBFhx73)");
+invite.addField(`:link: GitHub :`, "[GitHub](https://github.com/ThePizzaDu62/MathBot)");
+
+
 module.exports = {
     help : help,
     calcHelp : calcHelp,
@@ -151,5 +162,6 @@ module.exports = {
     pl : pl, //perimeter list
     al : al, //area list
     vl : vl, //volume list
-    tl : tl //theorem list
+    tl : tl, //theorem list
+    invite : invite
 }
